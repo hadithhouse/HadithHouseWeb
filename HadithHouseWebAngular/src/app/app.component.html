@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">Hadith House</a>
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#mainNavBar"
+          aria-controls="mainNavBar"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNavBar">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [class]="selectedTab == item ? 'active': ''" *ngFor="let item of tabs">
+        <a class="nav-link" data-toggle="collapse" data-target="#mainNavBar" (click)="changeTab(item)">
+          {{ item.name }}
+        </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Search</button>
+    </form>
+    <ul class="navbar-nav">
+      <li class="nav-item" *ngIf="isFbLoginStatusFetched && fbUser === null">
+        <a class="nav-link" href="#" (click)="fbLogin()">Login with Facebook</a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isFbLoginStatusFetched && fbUser !== null">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          <img *ngIf="fbUser.profilePicUrl" [src]="fbUser.profilePicUrl"
+               class="rounded-circle" style="width: 32px; height: 32px;"/>
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdown01" style="left: -100px;">
+          <a class="dropdown-item" [href]="fbUser.link">Facebook Profile</a>
+          <a class="dropdown-item" (click)="fbLogout()">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="jumbotron" *ngIf="selectedTab !== null" style="padding: 3rem 1rem 1rem 1rem;">
+  <div class="container">
+    <h3 class="display-5" style="float: right;">
+      <i class="fa fa-spin fa-spinner" aria-hidden="true" ng-show="pendingRequests > 0"></i>
+    </h3>
+    <h3 class="display-5">
+      Hadiths Page
+      {{ selectedTab.name }}
+    </h3>
+    <p *ngIf="selectedTab.description">{{ selectedTab.description }}</p>
+  </div>
+</div>
+
