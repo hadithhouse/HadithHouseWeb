@@ -12,9 +12,9 @@
 
   <div class="collapse navbar-collapse" id="mainNavBar">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [class]="selectedTab == item ? 'active': ''" *ngFor="let item of tabs">
-        <a class="nav-link" data-toggle="collapse" data-target="#mainNavBar" (click)="changeTab(item)">
-          {{ item.name }}
+      <li class="nav-item" [class]="selectedTab == tab ? 'active': ''" *ngFor="let tab of tabs">
+        <a class="nav-link" data-toggle="collapse" data-target="#mainNavBar" (click)="changeTab(tab)">
+          {{ tab.name }}
         </a>
       </li>
     </ul>
