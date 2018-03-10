@@ -64,6 +64,36 @@ export class FacebookService {
     }
   }
 
+  public login(): Observable<any> {
+    FacebookService.verifyFacebookSdkLoaded();
+
+    return Observable.create((observer: NextObserver<string>) => {
+      this.FB.login((response) => {
+        if (response.authResponse) {
+          observer.next(response);
+          observer.complete();
+        } else {
+          observer.error('User cancelled login');
+          observer.complete();
+        }
+      }, (reason) => {
+        observer.error(reason);
+        observer.complete();
+      });
+    });
+  }
+
+  public logout(): Observable<any> {
+    FacebookService.verifyFacebookSdkLoaded();
+
+    return Observable.create((observer: NextObserver<string>) => {
+      this.FB.logout((response) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
+
   /**
    * Makes an FB request to retrieve info about the current logged in user.
    * @returns An observable delivering the user info object.

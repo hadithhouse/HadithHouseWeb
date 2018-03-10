@@ -5,7 +5,7 @@ let fbFetchedLoginStatus = false;
 let fbSdkLoaded = false;
 declare let FB: any;
 
-function setFbAccessToken(token) {
+export function setFbAccessToken(token) {
   fbAccessToken = token;
 }
 
@@ -24,7 +24,7 @@ export function getFbAccessToken() {
  * user, false otherwise.
  * @param {boolean} status The status fetching the login user.
  */
-function setFbLoginFetchStatus(status) {
+export function setFbLoginFetchStatus(status) {
   fbFetchedLoginStatus = status;
 }
 
@@ -44,7 +44,7 @@ export function isFbLoginStatusFetched() {
  * Sets a flag indicating whether FB SDK was loaded successfully or not.
  * @param loaded True or false.
  */
-function setFbSdkLoaded(loaded) {
+export function setFbSdkLoaded(loaded) {
   fbSdkLoaded = loaded;
 }
 

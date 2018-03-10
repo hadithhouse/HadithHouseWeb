@@ -163,7 +163,7 @@
     // [true, "no-public"]
     "no-conditional-assignment": false,
     "no-console": false,
-    "no-debugger": false,
+    "no-debugger": true,
     "no-empty-interface": false,
     "no-eval": false,
     "no-object-literal-type-assertion": false,
