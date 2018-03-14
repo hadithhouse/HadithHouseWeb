@@ -9,6 +9,13 @@ import {
   setFbAccessToken
 } from '../fbauth';
 import {FacebookService, FacebookUser} from './facebook.service';
+import { Router } from '@angular/router';
+
+interface ITab {
+  name: string;
+  urlPath: string;
+  selected: boolean;
+}
 
 @Component({
   selector: 'app-root',
@@ -16,7 +23,8 @@ import {FacebookService, FacebookUser} from './facebook.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private facebookService: FacebookService) {
+  constructor(private facebookService: FacebookService,
+     private router: Router) {
   }
 
   selectedTab = null;
@@ -30,7 +38,7 @@ export class AppComponent implements OnInit {
   isFbLoginStatusFetched = isFbLoginStatusFetched();
   fbAccessToken = getFbAccessToken();
 
-  tabs = [
+  tabs: ITab[] = [
     {name: 'Hadiths', urlPath: 'hadiths', selected: false},
     {name: 'Books', urlPath: 'books', selected: false},
     {name: 'Persons', urlPath: 'persons', selected: false},
@@ -129,8 +137,9 @@ export class AppComponent implements OnInit {
     });*/
   }
 
-  public changeTab(tab) {
+  public changeTab(tab: ITab) {
     _.each(this.tabs, (i) => i.selected = false);
+    this.router.navigate([tab.urlPath]);
     this.selectedTab = tab;
   }
 }
