@@ -6,6 +6,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from './app.component';
 import {FacebookService} from './facebook.service';
 import {HadithsComponent} from './hadiths/hadiths.component';
+import { BooksComponent } from './books/books.component';
+import { PersonsComponent } from './persons/persons.component';
+import { HadithTagsComponent } from './hadithtags/hadithtags.component';
+import { UsersComponent } from './users/users.component';
 
 /*
  * Use this later for invalid URLs.
@@ -13,12 +17,20 @@ import {HadithsComponent} from './hadiths/hadiths.component';
  */
 const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
+  {path: 'books', component: BooksComponent},
+  {path: 'persons', component: PersonsComponent},
+  {path: 'hadithtags', component: HadithTagsComponent},
+  {path: 'users', component: UsersComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HadithsComponent
+    HadithsComponent,
+    BooksComponent,
+    PersonsComponent,
+    HadithTagsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
