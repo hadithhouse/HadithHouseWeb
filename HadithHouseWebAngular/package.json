@@ -6,7 +6,8 @@
     "ng": "ng",
     "start": "ng serve --env=local",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test": "ng test --watch=false",
+    "test-watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -32,7 +33,7 @@
     "popper.js": "^1.12.9",
     "rxjs": "^5.5.6",
     "toastr": "^2.1.4",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.20"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.1",
@@ -49,6 +50,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.4",
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
