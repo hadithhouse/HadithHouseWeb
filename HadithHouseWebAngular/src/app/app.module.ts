@@ -31,21 +31,15 @@ const appRoutes: Routes = [
     PersonsComponent,
     HadithTagsComponent,
     UsersComponent,
-    PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(
-      appRoutes,
-      {
-        enableTracing: true // debugging purposes only
-      }
-    )
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   exports: [
-    RouterModule
   ],
   providers: [
     FacebookService
