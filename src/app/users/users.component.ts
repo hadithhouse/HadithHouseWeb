@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
+  // tslint:disable-next-line:no-empty
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  // tslint:disable-next-line:no-empty
+  ngOnInit() { }
 }
