@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./books.component.css']
 })
 export class BooksComponent implements OnInit {
-
+  // tslint:disable-next-line:no-empty
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  // tslint:disable-next-line:no-empty
+  ngOnInit() { }
 }
