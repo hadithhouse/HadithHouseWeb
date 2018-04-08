@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hadiths.component.css']
 })
 export class HadithsComponent implements OnInit {
-
+  // tslint:disable-next-line:no-empty
   constructor() { }
 
-  ngOnInit() {
-  }
+  // tslint:disable-next-line:no-empty
+  ngOnInit() { }
 }
