@@ -33,16 +33,9 @@ cp -r ./dist/* $DEPLOYMENT_PATH/
 cd $DEPLOYMENT_PATH
 
 # Give Apache2 ownership of the log files so it can write to them.
-log "Give Apache2 ownership of the app files so it can write to them."
-chgrp www-data $DEPLOYMENT_PATH
-chgrp -R www-data $DEPLOYMENT_PATH/*
-
-# Give Apache2 ownership of the log files so it can write to them.
-log "Give Apache2 ownership of the log files so it can write to them."
-chgrp www-data $LOGS_PATH
-if find "$LOGS_PATH" -mindepth 1 -print -quit | grep -q .; then
-  chgrp -R www-data $LOGS_PATH/*
-fi
+log "Give group ownership to www-data for the deployed files for apache2 to
+be able to read them."
+chgrp -R www-data ${DEPLOYMENT_PATH}/*
 
 # Gracefully reloading Apache2.
 log "Gracefully reloading Apache2..."
