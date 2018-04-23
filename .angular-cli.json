@@ -58,6 +58,7 @@
     "styleExt": "css",
     "component": {},
     "serve": {
+      "host": "local.hadithhouse.net",
       "port": 8000
     }
   }

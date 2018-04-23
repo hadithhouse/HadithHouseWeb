@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="/">Hadith House</a>
+  <a class="navbar-brand" (click)="changeTab(homeTab)">Hadith House</a>
   <button class="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -12,7 +12,7 @@
 
   <div class="collapse navbar-collapse" id="mainNavBar">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [class]="selectedTab == tab ? 'active': ''" *ngFor="let tab of tabs">
+      <li class="nav-item" [class]="selectedTab == tab ? 'active': ''" *ngFor="let tab of tabs.slice(0, tabs.length-2)">
         <a class="nav-link" data-toggle="collapse" data-target="#mainNavBar" (click)="changeTab(tab)">
           {{ tab.name }}
         </a>

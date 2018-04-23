@@ -9,7 +9,7 @@ import {
   setFbAccessToken
 } from '../fbauth';
 import {FacebookService, FacebookUser} from './facebook.service';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 interface ITab {
   name: string;
@@ -24,10 +24,8 @@ interface ITab {
 })
 export class AppComponent implements OnInit {
   constructor(private facebookService: FacebookService,
-     private router: Router) {
+              private router: Router) {
   }
-
-  selectedTab = null;
 
   fbUser: {
     id: number,
@@ -43,8 +41,11 @@ export class AppComponent implements OnInit {
     {name: 'Books', urlPath: 'books', selected: false},
     {name: 'Persons', urlPath: 'persons', selected: false},
     {name: 'Tags', urlPath: 'hadithtags', selected: false},
-    {name: 'Users', urlPath: 'users', selected: false}
+    {name: 'Users', urlPath: 'users', selected: false},
+    {name: 'Home', urlPath: '', selected: false}
   ];
+  homeTab = this.tabs[this.tabs.length - 1];
+  selectedTab = this.homeTab;
 
   ngOnInit() {
     this.getUserInfo();
