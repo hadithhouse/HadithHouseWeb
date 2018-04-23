@@ -1,3 +1,15 @@
-<p>
-  This is the home page
-</p>
+<h4>
+  Random Hadith
+  <button class="btn btn-secondary btn-sm fa" aria-hidden="true"
+          (click)="loadRandomHadith()">
+    <fa-icon [icon]="faSync"></fa-icon>
+  </button>
+</h4>
+
+<div class="alert alert-success" *ngIf="randomHadith && randomHadith.text !== null">
+  {{ randomHadith?.text }}
+</div>
+
+<a href=""
+   *ngIf="randomHadith && randomHadith.text !== null"
+   [href]="'/hadith/' + randomHadith?.id">Go to hadith page</a>
