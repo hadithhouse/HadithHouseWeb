@@ -46,8 +46,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadRandomHadith() {
-    alert('test');
-    // const url = 'http://api-dev.hadithhouse.net/apis/hadiths/random';
     const url = environment.apisUrl + 'hadiths/random';
 
     this.httpClient.get<Hadith>(url, {
