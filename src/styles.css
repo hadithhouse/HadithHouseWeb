@@ -1,10 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.css';
-
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Rafid K. Al-Humaimidi
+ * Copyright (c) 2018 Rafid K. Al-Humaimidi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~toastr/build/toastr.css';
 
 body {
   padding-top: 2rem;

@@ -13,6 +13,8 @@ import {HadithTagsComponent} from './hadithtags/hadithtags.component';
 import {UsersComponent} from './users/users.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HomeComponent} from './home/home.component';
+import {HadithHouseApiService} from './hadith-house-api.service';
+import {TruncatePipe} from './pipes/pipes';
 
 const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
     UsersComponent,
     HomeComponent,
     PageNotFoundComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ const appRoutes: Routes = [
   ],
   exports: [],
   providers: [
-    FacebookService
+    FacebookService,
+    HadithHouseApiService
   ],
   bootstrap: [AppComponent]
 })
