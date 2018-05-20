@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HadithHouseApiService, HadithTag} from '../hadith-house-api.service';
+import * as toastr from 'toastr';
 
 @Component({
   selector: 'app-hadithtags',
@@ -6,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hadithtags.component.css']
 })
 export class HadithTagsComponent implements OnInit {
-  // tslint:disable-next-line:no-empty
-  constructor() { }
+  hadithTags: HadithTag[];
 
-  // tslint:disable-next-line:no-empty
-  ngOnInit() { }
+  constructor(private hhApi: HadithHouseApiService) {
+  }
+
+  ngOnInit() {
+    this.hhApi.getHadithTags({
+      limit: 5,
+      offset: 0
+    }).subscribe(hadithTags => {
+      this.hadithTags = hadithTags.results;
+    });
+  }
+
+  showDeleteDialog(tag: HadithTag) {
+    toastr.warning('Not implemented yet!');
+  }
+
+  userHasDeletePermission() {
+    // FIXME: Not implemented yet.
+    return true;
+  }
 }
