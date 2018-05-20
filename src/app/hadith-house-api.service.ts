@@ -88,7 +88,7 @@ export class HadithHouseApiService {
    */
   public getHadiths(query: any): Observable<PagedResults<Hadith>> {
     const url = environment.apisUrl + 'hadiths';
-    return this.httpClient.get<PagedResults<Hadith>>(url);
+    return this.httpClient.get<PagedResults<Hadith>>(url, {params: query});
   }
 
   /**
@@ -110,8 +110,8 @@ export class HadithHouseApiService {
    * @param query A dictionary of search query.
    * @returns {Observable<Hadith[]>}
    */
-  public getHadithTags(query: any): Observable<{results: HadithTag[]}> {
+  public getHadithTags(query: any): Observable<{ results: HadithTag[] }> {
     const url = environment.apisUrl + 'hadithtags';
-    return this.httpClient.get<{results: HadithTag[]}>(url);
+    return this.httpClient.get<{ results: HadithTag[] }>(url);
   }
 }
