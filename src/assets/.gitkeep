@@ -1,0 +1,2 @@
+# Ensure that the 'assets' directly, which is referenced by angular.json, is created by git even if it is empty.
+# Once files are added to the container directory, this file can be deleted.
