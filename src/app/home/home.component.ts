@@ -1,31 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {faSync} from '@fortawesome/free-solid-svg-icons';
-import {environment} from '../../environments/environment';
-
-class Entity {
-  public id: number;
-  // tslint:disable-next-line:variable-name
-  public added_by: number;
-  // tslint:disable-next-line:variable-name
-  public updated_by: number;
-  // tslint:disable-next-line:variable-name
-  public added_on: string;
-  // tslint:disable-next-line:variable-name
-  public updated_on: string;
-  public valid: boolean = null;
-}
-
-class Hadith extends Entity {
-  public text: string;
-  public person: number;
-  public book: number;
-  public volume: number;
-  public chapter: number;
-  public section: number;
-  public tags: number[];
-
-}
+import {HadithHouseApiService, Hadith} from '../hadith-house-api.service';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +10,7 @@ class Hadith extends Entity {
 export class HomeComponent implements OnInit {
   faSync = faSync;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private hadithHouseApi: HadithHouseApiService) {
   }
 
   public randomHadith: Hadith;
@@ -46,11 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadRandomHadith() {
-    const url = environment.apisUrl + 'hadiths/random';
-
-    this.httpClient.get<Hadith>(url, {
-      headers: {}
-    }).subscribe(hadith => {
+    this.hadithHouseApi.getRandomHadith().subscribe(hadith => {
       this.randomHadith = hadith;
     });
   }
