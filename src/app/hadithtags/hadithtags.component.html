@@ -1,3 +1,13 @@
-<p>
-  Hadith tags works!
-</p>
+<div *ngFor="let tag of hadithTags">
+  <button type="button"
+          class="btn btn-danger btn-sm"
+          (click)="showDeleteDialog(tag)"
+          *ngIf="userHasDeletePermission()">
+    X
+  </button>
+  <a [href]="'/hadithtag/' + tag.id">
+    {{ tag.name }}
+  </a>
+  <hr/>
+</div>
+
