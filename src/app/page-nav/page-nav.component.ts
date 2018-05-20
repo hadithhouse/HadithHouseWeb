@@ -17,9 +17,11 @@ export class PageNavComponent implements OnInit, OnChanges {
   @Output('change') pageChanged = new EventEmitter<number>();
   page = 1;
 
+  // tslint:disable-next-line:no-empty
   constructor() {
   }
 
+  // tslint:disable-next-line:no-empty
   ngOnInit() {
   }
 
@@ -44,7 +46,7 @@ export class PageNavComponent implements OnInit, OnChanges {
     this.pageChanged.emit(this.page);
   }
 
+  // tslint:disable-next-line:no-empty
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-
   }
 }
