@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hadith-house-web-angular": {
+    "hadith-house": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -58,26 +58,26 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hadith-house-web-angular:build",
+            "browserTarget": "hadith-house:build",
             "port": 8000,
             "host": "local.hadithhouse.net"
           },
           "configurations": {
             "local": {
-              "browserTarget": "hadith-house-web-angular:build:local"
+              "browserTarget": "hadith-house:build:local"
             },
             "dev": {
-              "browserTarget": "hadith-house-web-angular:build:dev"
+              "browserTarget": "hadith-house:build:dev"
             },
             "prod": {
-              "browserTarget": "hadith-house-web-angular:build:prod"
+              "browserTarget": "hadith-house:build:prod"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hadith-house-web-angular:build"
+            "browserTarget": "hadith-house:build"
           }
         },
         "test": {
@@ -111,7 +111,7 @@
         }
       }
     },
-    "hadith-house-web-angular-e2e": {
+    "hadith-house-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -120,7 +120,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "hadith-house-web-angular:serve"
+            "devServerTarget": "hadith-house:serve"
           }
         },
         "lint": {
@@ -137,7 +137,7 @@
       }
     }
   },
-  "defaultProject": "hadith-house-web-angular",
+  "defaultProject": "hadith-house",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
