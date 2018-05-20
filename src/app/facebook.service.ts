@@ -23,9 +23,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, NextObserver} from 'rxjs';
 import {getFbAccessToken, isFbSdkLoaded} from '../fbauth';
-import {NextObserver} from 'rxjs/Observer';
 
 declare global {
   // tslint:disable-next-line:interface-name
