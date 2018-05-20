@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Hadith, HadithHouseApiService} from '../hadith-house-api.service';
 
 @Component({
   selector: 'app-hadiths',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hadiths.component.css']
 })
 export class HadithsComponent implements OnInit {
+  hadiths: Hadith[];
   // tslint:disable-next-line:no-empty
-  constructor() { }
+  constructor(private hhApi: HadithHouseApiService) { }
 
   // tslint:disable-next-line:no-empty
-  ngOnInit() { }
+  ngOnInit() {
+    this.hhApi.getHadiths({
+      limit: 5,
+      offset: 0
+    }).subscribe(pagedHadiths => {
+      this.hadiths = pagedHadiths.results;
+    });
+  }
 }
