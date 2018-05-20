@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('hadith-house-web-angular App', () => {
+describe('hadith-house App', () => {
   let page: AppPage;
 
   beforeEach(() => {
