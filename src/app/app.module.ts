@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -15,7 +15,11 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HomeComponent} from './home/home.component';
 import {HadithHouseApiService} from './hadith-house-api.service';
 import {TruncatePipe} from './pipes/pipes';
-import { PageNavComponent } from './page-nav/page-nav.component';
+import {PageNavComponent} from './page-nav/page-nav.component';
+import {
+  HTTP_INTERCEPTOR_PROVIDERS,
+  LoadingStatusHttpInterceptor
+} from './http-interceptors';
 
 const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
@@ -49,7 +53,9 @@ const appRoutes: Routes = [
   exports: [],
   providers: [
     FacebookService,
-    HadithHouseApiService
+    HadithHouseApiService,
+    LoadingStatusHttpInterceptor,
+    HTTP_INTERCEPTOR_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })

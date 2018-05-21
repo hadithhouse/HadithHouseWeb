@@ -45,12 +45,11 @@
 <div class="jumbotron" *ngIf="selectedTab !== null" style="padding: 3rem 1rem 1rem 1rem;">
   <div class="container">
     <h3 class="display-5" style="float: right;">
-      <i class="fa fa-spin fa-spinner" aria-hidden="true" ng-show="pendingRequests > 0"></i>
+      <i><fa-icon [icon]="faSyncAlt" [spin]="true"  [hidden]="!showSpinner"></fa-icon></i>
     </h3>
     <h3 class="display-5">
       {{ selectedTab.name }}
     </h3>
-    <p *ngIf="selectedTab.description">{{ selectedTab.description }}</p>
   </div>
 </div>
 
