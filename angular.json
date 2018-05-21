@@ -42,10 +42,13 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
+              // Temporarily disabling aot and buildOptimizer because of the
+              // issue mentioned here:
+              // https://github.com/angular/angular-cli/issues/10516#issuecomment-390548104
+              //"aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              //"buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
