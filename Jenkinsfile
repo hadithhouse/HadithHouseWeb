@@ -55,6 +55,17 @@ exit $?
       }
     }
 
+    stage('Build Prod') {
+      when {
+        // Deploy only when the branch being built is master.
+        expression { env.BRANCH_NAME == 'master' }
+      }
+      steps {
+        sh('rm -rf dist/')
+        sh('npm run build')
+      }
+    }
+
     stage('Deploy Prod') {
       when {
         // Deploy only when the branch being built is master.
