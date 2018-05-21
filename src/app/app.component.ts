@@ -10,6 +10,9 @@ import {
 } from '../fbauth';
 import {FacebookService, FacebookUser} from './facebook.service';
 import {Router} from '@angular/router';
+import {LoadingStatusHttpInterceptor} from './http-interceptors';
+import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
+import {debounceTime} from 'rxjs/operators';
 
 interface ITab {
   name: string;
@@ -23,8 +26,11 @@ interface ITab {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  faSyncAlt = faSyncAlt;
+
   constructor(private facebookService: FacebookService,
-              private router: Router) {
+              private router: Router,
+              private loadingStatusInterceptor: LoadingStatusHttpInterceptor) {
   }
 
   fbUser: {
@@ -46,9 +52,15 @@ export class AppComponent implements OnInit {
   ];
   homeTab = this.tabs[this.tabs.length - 1];
   selectedTab = this.homeTab;
+  showSpinner = false;
 
   ngOnInit() {
     this.getUserInfo();
+    this.loadingStatusInterceptor.isLoadingObservable()
+      .pipe(debounceTime(100))
+      .subscribe(showSpinner => {
+        this.showSpinner = showSpinner;
+      });
   }
 
   public search() {
