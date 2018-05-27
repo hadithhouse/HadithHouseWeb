@@ -23,39 +23,49 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable, NextObserver} from 'rxjs';
-import {getFbAccessToken, isFbSdkLoaded} from '../fbauth';
+import {Observable, Observer} from 'rxjs';
+import {environment} from '../environments/environment';
 
 declare global {
   // tslint:disable-next-line:interface-name
   interface Window {
     FB: any;
-    fbUserId: any;
   }
 }
 
-export class FacebookUser {
-  public id: number;
-  public link: string;
-  public picture: { data: { url: string } };
+export interface IFbMeResponse {
+  id: number;
+  link: string;
+  picture: { data: { url: string } };
+}
+
+export interface IFbAuthResponse {
+  accessToken: string;
+  expiresIn: number;
+  signedRequest: string;
+  userID: string;
+  grantedScopes?: string;
+}
+
+export interface IFbLoginStatus {
+  status: string;
+  authResponse: IFbAuthResponse;
 }
 
 @Injectable()
 export class FacebookService {
-  private fbUserId: number;
-  private FB: any;
+  private FB: any = null;
+  private fbSdkLoaded = false;
 
-  constructor() {
-    this.FB = window.FB;
-    if (isFbSdkLoaded()) {
-      this.fbUserId = window.fbUserId;
-    } else {
-      this.fbUserId = null;
-    }
+  public isFbSdkLoaded() {
+    return this.fbSdkLoaded;
   }
 
-  private static verifyFacebookSdkLoaded(): void {
-    if (!isFbSdkLoaded()) {
+  /**
+   * Verifies that Facebook SDK is loaded. If it is not, an exception is thrown.
+   */
+  private verifyFacebookSdkLoaded(): void {
+    if (!this.isFbSdkLoaded()) {
       throw new Error('Cannot login because Facebook SDK couldn\'t be ' +
         'loaded. This is most probably due to a plugin in your browser, e.g. ' +
         'AdBlocker or Ghostery, blocking requests to social websites. ' +
@@ -63,30 +73,86 @@ export class FacebookService {
     }
   }
 
-  public login(): Observable<any> {
-    FacebookService.verifyFacebookSdkLoaded();
+  /**
+   * Initializes the service. This essentially loads the FB JS SDK.
+   * @returns {Observable<true>} An observable for watching the initialization.
+   */
+  public init(): Observable<true> {
+    return Observable.create((observer: Observer<true>) => {
+      // FB SDK calls this function if it succeeds.
+      (<any>window).fbAsyncInit = () => {
+        this.FB = window.FB;
+        this.FB.init({
+          appId: environment.fbAppId,
+          xfbml: true,
+          version: 'v2.8'
+        });
 
-    return Observable.create((observer: NextObserver<string>) => {
-      this.FB.login((response) => {
-        if (response.authResponse) {
-          observer.next(response);
-          observer.complete();
-        } else {
-          observer.error('User cancelled login');
-          observer.complete();
+        this.fbSdkLoaded = true;
+        observer.next(true);
+        observer.complete();
+      };
+
+      ((d, s, id) => {
+        let js;
+        const fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
         }
-      }, (reason) => {
-        observer.error(reason);
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        // This handler is useful if we fail to load FB's sdk.js file, e.g. if
+        // there is an AD blocker in the browser.
+        js.onerror = () => {
+          this.fbSdkLoaded = false;
+          observer.error('Failed to load FB SDK. This is most probably due ' +
+            'to a plugin in your browser, e.g. AdBlocker or Ghostery, ' +
+            'blocking requests to social websites. Disable blocking for this ' +
+            'website and try again.');
+        };
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'facebook-jssdk');
+    });
+  }
+
+  /**
+   * Logs in the current user with FB.
+   * @returns {Observable<any>} An observable for when logging in happens.
+   */
+  public login(): Observable<IFbLoginStatus> {
+    this.verifyFacebookSdkLoaded();
+
+    return Observable.create((observer: Observer<IFbAuthResponse>) => {
+      this.FB.login(response => {
+        observer.next(response);
         observer.complete();
       });
     });
   }
 
+  /**
+   * Logs out the current logged in FB user.
+   * @returns {Observable<any>} An observable for when logging out happens.
+   */
   public logout(): Observable<any> {
-    FacebookService.verifyFacebookSdkLoaded();
+    this.verifyFacebookSdkLoaded();
 
-    return Observable.create((observer: NextObserver<string>) => {
-      this.FB.logout((response) => {
+    return Observable.create((obs: Observer<string>) => {
+      this.FB.logout(response => {
+        obs.next(response);
+        obs.complete();
+      });
+    });
+  }
+
+  /**
+   *
+   * @returns {Observable<IFbLoginStatus>}
+   */
+  public getLoginStatus(): Observable<IFbLoginStatus> {
+    return Observable.create((observer: Observer<IFbLoginStatus>) => {
+      this.FB.getLoginStatus((response: IFbLoginStatus) => {
         observer.next(response);
         observer.complete();
       });
@@ -97,20 +163,13 @@ export class FacebookService {
    * Makes an FB request to retrieve info about the current logged in user.
    * @returns An observable delivering the user info object.
    */
-  public getLoggedInUser(): Observable<FacebookUser> {
-    FacebookService.verifyFacebookSdkLoaded();
+  public getLoggedInUser(): Observable<IFbMeResponse> {
+    this.verifyFacebookSdkLoaded();
 
-    return Observable.create((observer: NextObserver<FacebookUser>) => {
-      if (getFbAccessToken() === null) {
-        // No access token, so user is not logged in.
-        observer.next(null);
-        observer.complete();
-      }
-
+    return Observable.create((observer: Observer<IFbMeResponse>) => {
       this.FB.api('/me', {fields: 'link,picture'}, (response) => {
           if (response.error) {
             observer.error(response.error);
-            observer.complete();
           } else {
             observer.next(response);
             observer.complete();
