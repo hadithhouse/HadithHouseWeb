@@ -13,6 +13,8 @@ import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 // HadithHouse imports
 import {FacebookService, IFbMeResponse} from './facebook.service';
 import {LoadingStatusHttpInterceptor} from './http-interceptors';
+import {UserService} from './hadith-house-api.service';
+import {AuthService} from './auth.service';
 
 /**
  * Identifies a tab in the home page.
@@ -45,31 +47,10 @@ export class AppComponent implements OnInit {
   constructor(private facebookService: FacebookService,
               private router: Router,
               private loadingStatusInterceptor: LoadingStatusHttpInterceptor,
-              private changeDetector: ChangeDetectorRef) {
+              private changeDetector: ChangeDetectorRef,
+              private userService: UserService,
+              protected authService: AuthService) {
   }
-
-  isLoginStatusFetched = false;
-
-  /**
-   * The FB access token of the currently logged in user, if there is any.
-   */
-  fbAccessToken: string = null;
-
-  /**
-   * The FB user ID of the currently logged in user, if there is any.
-   */
-  fbUserId: string = null;
-
-  /**
-   * Basic information about the currently logged in user, like picture URL,
-   * etc., if there is any.
-   * @type {null}
-   */
-  fbUserInfo: {
-    id: number,
-    profilePicUrl: string,
-    link: string
-  } = null;
 
   tabs: ITab[] = [
     {name: 'Hadiths', urlPath: 'hadiths', selected: false},
@@ -89,7 +70,7 @@ export class AppComponent implements OnInit {
   }
 
   private initFbSdk() {
-    this.facebookService.init().subscribe(next => {
+    this.facebookService.init().subscribe(() => {
       console.log('FB SDK successfully initialized.');
       this.fbGetLoginStatus();
     }, () => {
@@ -101,20 +82,20 @@ export class AppComponent implements OnInit {
   }
 
   private fbSetUser(accessToken: string, userId: string) {
-    this.fbAccessToken = accessToken;
-    this.fbUserId = userId;
-    if (this.fbUserId !== null) {
+    this.authService.fbAccessToken = accessToken;
+    this.authService.fbUserId = userId;
+    if (this.authService.fbUserId !== null) {
       this.fetchUserInfo();
     }
     else {
-      this.fbUserInfo = null;
+      this.authService.fbUserInfo = null;
     }
   }
 
   private fbGetLoginStatus() {
     this.facebookService.getLoginStatus().pipe(timeout(5000)).subscribe(
       loginStatus => {
-        this.isLoginStatusFetched = true;
+        this.authService.isLoginStatusFetched = true;
         if (loginStatus.status === 'connected') {
           // The user is logged in to Facebook and has authenticated
           // the application.
@@ -132,7 +113,7 @@ export class AppComponent implements OnInit {
       },
       error => {
         console.error("Couldn't fetch login status.");
-        this.isLoginStatusFetched = false;
+        this.authService.isLoginStatusFetched = false;
         this.changeDetector.detectChanges();
       });
   }
@@ -189,38 +170,29 @@ export class AppComponent implements OnInit {
     this.facebookService.getLoggedInUser().subscribe(
       (user: IFbMeResponse) => {
         if (user === null) {
-          this.fbUserInfo = null;
+          this.authService.fbUserInfo = null;
         } else {
-          this.fbUserInfo = {
+          this.authService.fbUserInfo = {
             id: user.id,
             link: user.link,
             profilePicUrl: user.picture.data.url
           };
         }
+
+        this.userService.get('current').subscribe(user => {
+          this.authService.user = user;
+          this.changeDetector.detectChanges();
+        });
+
         this.changeDetector.detectChanges();
       },
       (error: any) => {
         console.error('Failed to fetch logged in user. Error: ' +
           JSON.stringify(error));
-        this.fbUserInfo = null;
+        this.authService.fbUserInfo = null;
         this.changeDetector.detectChanges();
       }
     );
-
-    // To be implemented when we implement user service.
-    /*const currentUser = this.userResource.get('current', true);
-    currentUser.promise.then(() => {
-      const perms = {};
-      for (const i in currentUser.permissions) {
-        if (currentUser.permissions.hasOwnProperty(i)) {
-          perms[currentUser.permissions[i]] = true;
-        }
-      }
-      const user: any = {};
-      angular.copy(currentUser, user);
-      user.permissions = perms;
-      this.$rootScope.user = user;
-    });*/
   }
 
   private subscribeToLoadingStatusInterceptor() {
