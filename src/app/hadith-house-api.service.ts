@@ -38,6 +38,20 @@ export class HadithTag extends Entity {
   public name: string;
 }
 
+export class User extends Entity {
+// tslint:disable:variable-name
+  public name: string;
+  public first_name: string;
+  public last_name: string;
+  public is_superuser: boolean;
+  public is_staff: boolean;
+  public username: string;
+  public date_joined: string;
+  public permissions: string[];
+  public permissionsOrdered: string[];
+// tslint:enable:variable-name
+}
+
 /**
  * Data contract for paged results returned from Hadith House API (Django).
  */
@@ -61,6 +75,60 @@ export class PagedResults<TEntity> {
    * An array containing the results.
    */
   public results: TEntity[];
+}
+
+export abstract class RestApi<TEntity, TId> {
+  abstract getUrl(id: TId): string;
+  abstract get httpClient(): HttpClient;
+
+  /**
+   * Retrieves the entities having the given IDs.
+   * @param id The ID of the entity to retrieve.
+   * @returns An observable for the entity to be retrieved.
+   */
+  public get(id: TId): Observable<TEntity> {
+    const url = this.getUrl(id);
+    return this.httpClient.get<TEntity>(url);
+  }
+
+  public delete(id: TId): Observable<void> {
+    const url = this.getUrl(id);
+    return this.httpClient.delete<void>(url);
+  }
+}
+
+/**
+ * A service for interacting with Hadith House's users service.
+ */
+@Injectable()
+export class UserService extends RestApi<User, 'current'|number> {
+  constructor(private _httpClient: HttpClient) {
+    super();
+  }
+
+  getUrl(id: 'current'|number): string {
+    return environment.apisUrl + 'users/' + id;
+  }
+
+  get httpClient(): HttpClient {
+    return this._httpClient;
+  }
+}
+
+@Injectable()
+export class HadithTagService extends RestApi<HadithTag, number> {
+  constructor(private _httpClient: HttpClient) {
+    super();
+  }
+
+  getUrl(id: number): string {
+    return environment.apisUrl + 'hadithtags/' + id;
+  }
+
+  get httpClient(): HttpClient {
+    return this._httpClient;
+  }
+
 }
 
 @Injectable()
@@ -110,8 +178,8 @@ export class HadithHouseApiService {
    * @param query A dictionary of search query.
    * @returns {Observable<Hadith[]>}
    */
-  public getHadithTags(query: any): Observable<{ results: HadithTag[] }> {
+  public getHadithTags(query: any): Observable<PagedResults<HadithTag>> {
     const url = environment.apisUrl + 'hadithtags';
-    return this.httpClient.get<{ results: HadithTag[] }>(url);
+    return this.httpClient.get<PagedResults<HadithTag>>(url);
   }
 }
