@@ -1,11 +1,14 @@
 import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {RouterTestingModule} from '@angular/router/testing';
-import {FacebookService} from './facebook.service';
+import {configureTestBed} from '../test';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    // TODO: configureTestBed() adds all imports, declarations, and providers
+    // to the test module. Is this the right thing to do, or we should add
+    // just enough dependencies to run the tests?
+    configureTestBed();
+    /*TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
@@ -15,7 +18,7 @@ describe('AppComponent', () => {
       providers: [
         FacebookService
       ]
-    }).compileComponents();
+    }).compileComponents();*/
   }));
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);

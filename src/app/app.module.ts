@@ -28,7 +28,7 @@ import {AuthService} from './auth.service';
 import {HadithTagComponent} from './hadithtag/hadithtag.component';
 import {FormsModule} from '@angular/forms';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
   {path: 'books', component: BooksComponent},
   {path: 'persons', component: PersonsComponent},

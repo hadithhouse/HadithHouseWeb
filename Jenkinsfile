@@ -22,6 +22,12 @@ pipeline {
       }
     }
 
+    stage('Lint Dev') {
+      steps {
+        sh('npm run test')
+      }
+    }
+
     stage('Deploy Dev') {
       when {
         // Deploy only when the branch being built is master.
