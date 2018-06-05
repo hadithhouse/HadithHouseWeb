@@ -25,11 +25,14 @@ import {
   LoadingStatusHttpInterceptor
 } from './http-interceptors';
 import {AuthService} from './auth.service';
+import {HadithTagComponent} from './hadithtag/hadithtag.component';
+import {FormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
   {path: 'books', component: BooksComponent},
   {path: 'persons', component: PersonsComponent},
+  {path: 'hadithtag/:id', component: HadithTagComponent},
   {path: 'hadithtags', component: HadithTagsComponent},
   {path: 'users', component: UsersComponent},
   {path: '', component: HomeComponent},
@@ -42,6 +45,7 @@ const appRoutes: Routes = [
     HadithsComponent,
     BooksComponent,
     PersonsComponent,
+    HadithTagComponent,
     HadithTagsComponent,
     UsersComponent,
     HomeComponent,
@@ -53,7 +57,8 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   exports: [],
   providers: [

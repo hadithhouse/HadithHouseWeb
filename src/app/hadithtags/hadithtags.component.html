@@ -5,7 +5,7 @@
           *ngIf="userHasDeletePermission()">
     X
   </button>
-  <a [href]="'/hadithtag/' + tag.id">
+  <a routerLink="/hadithtag/{{tag.id}}">
     {{ tag.name }}
   </a>
   <hr/>

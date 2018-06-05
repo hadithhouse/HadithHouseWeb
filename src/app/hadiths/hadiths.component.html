@@ -9,7 +9,7 @@
     </button>
     -->
 
-    <a [href]="'/hadith/' + hadith.id">
+    <a routerLink="/hadith/{{hadith.id}}">
       {{ hadith.text | truncate:500 }}
     </a>
 

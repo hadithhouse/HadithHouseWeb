@@ -5,7 +5,7 @@
           *ngIf="userHasDeletePermission()">
     X
   </button>
-  <a [href]="'/book/' + book.id">
+  <a routerLink="/book/{{book.id}}">
     {{ book.title }}
   </a>
   <hr/>

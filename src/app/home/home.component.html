@@ -12,4 +12,4 @@
 
 <a href=""
    *ngIf="randomHadith && randomHadith.text !== null"
-   [href]="'/hadith/' + randomHadith?.id">Go to hadith page</a>
+   routerLink="/hadith/{{randomHadith.id}}">Go to hadith page</a>
