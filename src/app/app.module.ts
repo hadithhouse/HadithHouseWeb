@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -13,18 +13,26 @@ import {HadithTagsComponent} from './hadithtags/hadithtags.component';
 import {UsersComponent} from './users/users.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HomeComponent} from './home/home.component';
-import {HadithHouseApiService} from './hadith-house-api.service';
+import {
+  HadithHouseApiService,
+  HadithTagService,
+  UserService
+} from './hadith-house-api.service';
 import {TruncatePipe} from './pipes/pipes';
 import {PageNavComponent} from './page-nav/page-nav.component';
 import {
   HTTP_INTERCEPTOR_PROVIDERS,
   LoadingStatusHttpInterceptor
 } from './http-interceptors';
+import {AuthService} from './auth.service';
+import {HadithTagComponent} from './hadithtag/hadithtag.component';
+import {FormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
   {path: 'hadiths', component: HadithsComponent},
   {path: 'books', component: BooksComponent},
   {path: 'persons', component: PersonsComponent},
+  {path: 'hadithtag/:id', component: HadithTagComponent},
   {path: 'hadithtags', component: HadithTagsComponent},
   {path: 'users', component: UsersComponent},
   {path: '', component: HomeComponent},
@@ -37,6 +45,7 @@ const appRoutes: Routes = [
     HadithsComponent,
     BooksComponent,
     PersonsComponent,
+    HadithTagComponent,
     HadithTagsComponent,
     UsersComponent,
     HomeComponent,
@@ -48,11 +57,15 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   exports: [],
   providers: [
     FacebookService,
+    HadithTagService,
+    UserService,
+    AuthService,
     HadithHouseApiService,
     LoadingStatusHttpInterceptor,
     HTTP_INTERCEPTOR_PROVIDERS
