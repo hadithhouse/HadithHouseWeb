@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {environment} from '../environments/environment';
 
@@ -57,6 +57,9 @@ export class FacebookService {
   private FB: any = null;
   private fbSdkLoaded = false;
 
+  constructor(private ngZone: NgZone) {
+  }
+
   public isFbSdkLoaded() {
     return this.fbSdkLoaded;
   }
@@ -79,40 +82,42 @@ export class FacebookService {
    */
   public init(): Observable<true> {
     return Observable.create((observer: Observer<true>) => {
-      // FB SDK calls this function if it succeeds.
-      (<any>window).fbAsyncInit = () => {
-        this.FB = window.FB;
-        this.FB.init({
-          appId: environment.fbAppId,
-          xfbml: true,
-          version: 'v2.8'
-        });
+      this.ngZone.run(() => {
+        // FB SDK calls this function if it succeeds.
+        (<any>window).fbAsyncInit = () => {
+          this.FB = window.FB;
+          this.FB.init({
+            appId: environment.fbAppId,
+            xfbml: true,
+            version: 'v2.8'
+          });
 
-        this.fbSdkLoaded = true;
-        observer.next(true);
-        observer.complete();
-      };
-
-      ((d, s, id) => {
-        let js;
-        const fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js';
-        // This handler is useful if we fail to load FB's sdk.js file, e.g. if
-        // there is an AD blocker in the browser.
-        js.onerror = () => {
-          this.fbSdkLoaded = false;
-          observer.error('Failed to load FB SDK. This is most probably due ' +
-            'to a plugin in your browser, e.g. AdBlocker or Ghostery, ' +
-            'blocking requests to social websites. Disable blocking for this ' +
-            'website and try again.');
+          this.fbSdkLoaded = true;
+          observer.next(true);
+          observer.complete();
         };
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'facebook-jssdk');
+
+        ((d, s, id) => {
+          let js;
+          const fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {
+            return;
+          }
+          js = d.createElement(s);
+          js.id = id;
+          js.src = 'https://connect.facebook.net/en_US/sdk.js';
+          // This handler is useful if we fail to load FB's sdk.js file, e.g. if
+          // there is an AD blocker in the browser.
+          js.onerror = () => {
+            this.fbSdkLoaded = false;
+            observer.error('Failed to load FB SDK. This is most probably due ' +
+              'to a plugin in your browser, e.g. AdBlocker or Ghostery, ' +
+              'blocking requests to social websites. Disable blocking for ' +
+              'website and try again.');
+          };
+          fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
+      });
     });
   }
 
@@ -124,9 +129,11 @@ export class FacebookService {
     this.verifyFacebookSdkLoaded();
 
     return Observable.create((observer: Observer<IFbAuthResponse>) => {
-      this.FB.login(response => {
-        observer.next(response);
-        observer.complete();
+      this.ngZone.run(() => {
+        this.FB.login(response => {
+          observer.next(response);
+          observer.complete();
+        });
       });
     });
   }
@@ -139,9 +146,11 @@ export class FacebookService {
     this.verifyFacebookSdkLoaded();
 
     return Observable.create((obs: Observer<string>) => {
-      this.FB.logout(response => {
-        obs.next(response);
-        obs.complete();
+      this.ngZone.run(() => {
+        this.FB.logout(response => {
+          obs.next(response);
+          obs.complete();
+        });
       });
     });
   }
@@ -152,9 +161,11 @@ export class FacebookService {
    */
   public getLoginStatus(): Observable<IFbLoginStatus> {
     return Observable.create((observer: Observer<IFbLoginStatus>) => {
-      this.FB.getLoginStatus((response: IFbLoginStatus) => {
-        observer.next(response);
-        observer.complete();
+      this.ngZone.run(() => {
+        this.FB.getLoginStatus((response: IFbLoginStatus) => {
+          observer.next(response);
+          observer.complete();
+        });
       });
     });
   }
@@ -167,15 +178,17 @@ export class FacebookService {
     this.verifyFacebookSdkLoaded();
 
     return Observable.create((observer: Observer<IFbMeResponse>) => {
-      this.FB.api('/me', {fields: 'link,picture'}, (response) => {
-          if (response.error) {
-            observer.error(response.error);
-          } else {
-            observer.next(response);
-            observer.complete();
+      this.ngZone.run(() => {
+        this.FB.api('/me', {fields: 'link,picture'}, (response) => {
+            if (response.error) {
+              observer.error(response.error);
+            } else {
+              observer.next(response);
+              observer.complete();
+            }
           }
-        }
-      );
+        );
+      });
     });
   }
 }

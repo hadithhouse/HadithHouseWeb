@@ -24,6 +24,7 @@
 
 import {Injectable} from '@angular/core';
 import {User} from './hadith-house-api.service';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Injectable()
 export class AuthService {
@@ -73,7 +74,7 @@ export class AuthService {
     if (this.user === null) {
       return false;
     }
-    return this.user.permissions.includes(permissionName);
+    return this.user.hasPermission(permissionName);
   }
 }
 
