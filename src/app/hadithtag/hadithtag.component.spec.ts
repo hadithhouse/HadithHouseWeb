@@ -1,20 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HadithtagComponent } from './hadithtags.component';
+import {HadithTagComponent} from './hadithtag.component';
+import {configureTestBed} from '../../test';
 
 describe('HadithTagsComponent', () => {
-  let component: HadithtagComponent;
-  let fixture: ComponentFixture<HadithtagComponent>;
+  let component: HadithTagComponent;
+  let fixture: ComponentFixture<HadithTagComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HadithtagComponent ]
+    // TODO: configureTestBed() adds all imports, declarations, and providers
+    // to the test module. Is this the right thing to do, or we should add
+    // just enough dependencies to run the tests?
+    configureTestBed();
+    /*TestBed.configureTestingModule({
+      declarations: [ HadithTagComponent ]
     })
-    .compileComponents();
+    .compileComponents();*/
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HadithtagComponent);
+    fixture = TestBed.createComponent(HadithTagComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

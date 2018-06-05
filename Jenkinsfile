@@ -10,15 +10,21 @@ pipeline {
       }
     }
 
-    stage('Build Dev') {
+    stage('Lint') {
       steps {
-        sh('npm run build-dev')
+        sh('npm run lint')
       }
     }
 
-    stage('Lint Dev') {
+    stage('Test') {
       steps {
-        sh('npm run lint')
+        sh('npm run test')
+      }
+    }
+
+    stage('Build Dev') {
+      steps {
+        sh('npm run build-dev')
       }
     }
 
