@@ -23,18 +23,18 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Search</button>
     </form>
     <ul class="navbar-nav">
-      <li class="nav-item" *ngIf="isLoginStatusFetched && fbAccessToken === null">
+      <li class="nav-item" *ngIf="authService.isLoginStatusFetched && authService.fbAccessToken === null">
         <a class="nav-link" href="#" (click)="fbLogin()">Login with Facebook</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isLoginStatusFetched && fbUserInfo !== null">
+      <li class="nav-item dropdown" *ngIf="authService.isLoginStatusFetched && authService.fbUserInfo !== null">
         <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-          <img *ngIf="fbUserInfo.profilePicUrl" [src]="fbUserInfo.profilePicUrl"
+          <img *ngIf="authService.fbUserInfo.profilePicUrl" [src]="authService.fbUserInfo.profilePicUrl"
                class="rounded-circle" style="width: 32px; height: 32px;"/>
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdown01" style="left: -100px;">
-          <a class="dropdown-item" [href]="fbUserInfo.link">Facebook Profile</a>
+          <a class="dropdown-item" [href]="authService.fbUserInfo.link">Facebook Profile</a>
           <a class="dropdown-item" (click)="fbLogout()">Logout</a>
         </div>
       </li>
