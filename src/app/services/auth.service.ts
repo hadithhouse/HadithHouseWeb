@@ -23,8 +23,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {User} from './hadith-house-api.service';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {User} from './user-api.service';
 
 @Injectable()
 export class AuthService {

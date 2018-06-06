@@ -11,10 +11,10 @@ import {debounceTime, timeout} from 'rxjs/operators';
 import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 
 // HadithHouse imports
-import {FacebookService, IFbMeResponse} from './facebook.service';
+import {FacebookService, IFbMeResponse} from './services/facebook.service';
 import {LoadingStatusHttpInterceptor} from './http-interceptors';
-import {UserService} from './hadith-house-api.service';
-import {AuthService} from './auth.service';
+import {UserApiService} from './services/user-api.service';
+import {AuthService} from './services/auth.service';
 
 /**
  * Identifies a tab in the home page.
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
               private router: Router,
               private loadingStatusInterceptor: LoadingStatusHttpInterceptor,
               private changeDetector: ChangeDetectorRef,
-              private userService: UserService,
+              private userService: UserApiService,
               protected authService: AuthService) {
   }
 

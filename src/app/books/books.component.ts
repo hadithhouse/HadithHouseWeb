@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Book, HadithHouseApiService} from '../hadith-house-api.service';
 import * as toastr from 'toastr';
+import {Book, BookApiService} from '../services/book-api.service';
 
 @Component({
   selector: 'app-books',
@@ -11,12 +11,12 @@ export class BooksComponent implements OnInit {
   books: Book[];
 
   // tslint:disable-next-line:no-empty
-  constructor(private hhApi: HadithHouseApiService) {
+  constructor(private bookApi: BookApiService) {
   }
 
   // tslint:disable-next-line:no-empty
   ngOnInit() {
-    this.hhApi.getBooks({
+    this.bookApi.query({
       limit: 5,
       offset: 0
     }).subscribe(pagedBooks => {

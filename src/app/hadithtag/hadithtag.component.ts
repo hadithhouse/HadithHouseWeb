@@ -6,17 +6,16 @@ import {
   OnInit
 } from '@angular/core';
 import {Location} from '@angular/common';
-import {
-  HadithTag,
-  HadithTagService
-} from '../hadith-house-api.service';
 import * as toastr from 'toastr';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../services/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import * as _ from 'lodash';
 import {faTimes, faPencilAlt, faSave} from '@fortawesome/free-solid-svg-icons';
-import {Subscription} from 'rxjs/internal/Subscription';
+import {
+  HadithTag,
+  HadithTagApiService
+} from '../services/hadith-tag-api.service';
 
 
 @Component({
@@ -37,10 +36,9 @@ export class HadithTagComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private location: Location,
-              private hadithTagService: HadithTagService,
+              private hadithTagService: HadithTagApiService,
               protected authService: AuthService,
-              private changeDetector: ChangeDetectorRef,
-              private ngZone: NgZone) {
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {

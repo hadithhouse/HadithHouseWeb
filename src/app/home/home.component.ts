@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faSync} from '@fortawesome/free-solid-svg-icons';
-import {HadithHouseApiService, Hadith} from '../hadith-house-api.service';
+import {Hadith, HadithApiService} from '../services/hadith-api.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import {HadithHouseApiService, Hadith} from '../hadith-house-api.service';
 export class HomeComponent implements OnInit {
   faSync = faSync;
 
-  constructor(private hadithHouseApi: HadithHouseApiService) {
+  constructor(private hadithApi: HadithApiService) {
   }
 
   public randomHadith: Hadith;
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadRandomHadith() {
-    this.hadithHouseApi.getRandomHadith().subscribe(hadith => {
+    this.hadithApi.get('random').subscribe(hadith => {
       this.randomHadith = hadith;
     });
   }
