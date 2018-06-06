@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  HadithHouseApiService,
-  HadithTag,
-  HadithTagService
-} from '../hadith-house-api.service';
 import * as toastr from 'toastr';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../services/auth.service';
 import * as $ from 'jquery';
 import {HttpErrorResponse} from '@angular/common/http';
+import {
+  HadithTag,
+  HadithTagApiService
+} from '../services/hadith-tag-api.service';
 
 @Component({
   selector: 'app-hadithtags',
@@ -18,13 +17,12 @@ export class HadithTagsComponent implements OnInit {
   hadithTags: HadithTag[];
   private tagToDelete: HadithTag = null;
 
-  constructor(private hhApi: HadithHouseApiService,
-              private hadithTagService: HadithTagService,
+  constructor(private hadithTagApi: HadithTagApiService,
               private authService: AuthService) {
   }
 
   ngOnInit() {
-    this.hhApi.getHadithTags({
+    this.hadithTagApi.query({
       limit: 5,
       offset: 0
     }).subscribe(hadithTags => {
@@ -45,7 +43,7 @@ export class HadithTagsComponent implements OnInit {
     // modal() is defined in bootstrap but I don't have @types for it so costing
     // to type 'any' to stop tsc compiler errors.
     (<any>$('#deleteConfirmDialog')).modal('hide');
-    this.hadithTagService.delete(this.tagToDelete.id).subscribe(() => {
+    this.hadithTagApi.delete(this.tagToDelete.id).subscribe(() => {
       toastr.success('Hadith tag deleted');
       this.hadithTags = this.hadithTags.filter((e) => {
         return e.id !== this.tagToDelete.id;

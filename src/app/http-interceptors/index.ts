@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 import {AppComponent} from '../app.component';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../services/auth.service';
 
 /**
  * HTTP interceptor which sets a flag indicating whether there are pending
