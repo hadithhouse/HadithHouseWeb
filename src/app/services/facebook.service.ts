@@ -24,7 +24,7 @@
 
 import {Injectable, NgZone} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 declare global {
   // tslint:disable-next-line:interface-name
