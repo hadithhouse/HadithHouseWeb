@@ -1,5 +1,5 @@
-import {Component, OnChanges, OnInit, SimpleChange} from '@angular/core';
-import {Hadith, HadithHouseApiService} from '../hadith-house-api.service';
+import {Component, OnInit} from '@angular/core';
+import {Hadith, HadithApiService} from '../services/hadith-api.service';
 
 @Component({
   selector: 'app-hadiths',
@@ -8,28 +8,28 @@ import {Hadith, HadithHouseApiService} from '../hadith-house-api.service';
 })
 export class HadithsComponent implements OnInit {
   hadiths: Hadith[];
+  page = 0;
   pageSize = 10;
   pageCount = 1;
 
   // tslint:disable-next-line:no-empty
-  constructor(private hhApi: HadithHouseApiService) {
+  constructor(private hadithApi: HadithApiService) {
   }
 
   // tslint:disable-next-line:no-empty
   ngOnInit() {
-    this.hhApi.getHadiths({
-      limit: this.pageSize,
-      offset: 0
-    }).subscribe(pagedHadiths => {
-      this.hadiths = pagedHadiths.results;
-      this.pageCount = Math.ceil(pagedHadiths.count / this.pageSize);
-    });
+    this.loadHadiths();
   }
 
   onPageChanged(page: number) {
-    this.hhApi.getHadiths({
+    this.page = page;
+    this.loadHadiths();
+  }
+
+  private loadHadiths() {
+    this.hadithApi.query({
       limit: this.pageSize,
-      offset: (page - 1) * this.pageSize
+      offset: (this.page - 1) * this.pageSize
     }).subscribe(pagedHadiths => {
       this.hadiths = pagedHadiths.results;
       this.pageCount = Math.ceil(pagedHadiths.count / this.pageSize);
