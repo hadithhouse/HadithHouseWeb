@@ -97,13 +97,14 @@ export class FacebookService {
           observer.complete();
         };
 
-        ((d, s, id) => {
+        (() => {
+          const id = 'facebook-jssdk';
           let js;
-          const fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) {
+          const fjs = document.getElementsByTagName('head')[0];
+          if (document.getElementById(id)) {
             return;
           }
-          js = d.createElement(s);
+          js = document.createElement('script');
           js.id = id;
           js.src = 'https://connect.facebook.net/en_US/sdk.js';
           // This handler is useful if we fail to load FB's sdk.js file, e.g. if
@@ -115,8 +116,9 @@ export class FacebookService {
               'blocking requests to social websites. Disable blocking for ' +
               'website and try again.');
           };
-          fjs.parentNode.insertBefore(js, fjs);
-        })(document, 'script', 'facebook-jssdk');
+          // fjs.parentNode.insertBefore(js, fjs);
+          fjs.appendChild(js);
+        })();
       });
     });
   }

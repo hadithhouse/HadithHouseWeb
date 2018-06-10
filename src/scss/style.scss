@@ -1,0 +1,14 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~toastr/build/toastr.css";
+@import "~@coreui/coreui/scss/coreui";
+@import "~@coreui/icons/css/coreui-icons.css";
+@import "~flag-icon-css/css/flag-icon.css";
+@import "~simple-line-icons/css/simple-line-icons.css";
+
+// If you want to add something do it here
+@import "custom";
+
