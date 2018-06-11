@@ -8,6 +8,7 @@ import {CommonModule} from '@angular/common';
 import {HadithTagApiService} from '../../services/hadith-tag-api.service';
 import {AuthService} from '../../services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
+import {PageNavComponent} from '../../page-nav/page-nav.component';
 
 @NgModule({
   imports: [
@@ -16,9 +17,12 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     CommonModule,
     BsDropdownModule,
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
   ],
-  declarations: [HadithTagsComponent],
+  declarations: [
+    HadithTagsComponent,
+    PageNavComponent
+  ],
   providers: [
     HadithTagApiService,
     AuthService
