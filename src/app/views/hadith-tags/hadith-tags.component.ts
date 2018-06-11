@@ -15,22 +15,34 @@ import {
 })
 export class HadithTagsComponent implements OnInit {
   hadithTags: HadithTag[];
-  private tagToDelete: HadithTag = null;
+  page = 0;
+  pageSize = 10;
+  pageCount = 1;
 
   constructor(private hadithTagApi: HadithTagApiService,
               private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.loadHadithTags();
+  }
+
+  onPageChanged(page: number) {
+    this.page = page;
+    this.loadHadithTags();
+  }
+
+  private loadHadithTags() {
     this.hadithTagApi.query({
-      limit: 5,
-      offset: 0
-    }).subscribe(hadithTags => {
-      this.hadithTags = hadithTags.results;
+      limit: this.pageSize,
+      offset: (this.page - 1) * this.pageSize
+    }).subscribe(pagedHadiths => {
+      this.hadithTags = pagedHadiths.results;
+      this.pageCount = Math.ceil(pagedHadiths.count / this.pageSize);
     });
   }
 
-  showDeleteDialog(tag: HadithTag) {
+  /*showDeleteDialog(tag: HadithTag) {
     if (!this.authService.loggedInUserHasPermission('delete_hadithtag')) {
       throw new Error("The logged in user doesn't have permission to delete " +
         'hadith tags, so this method should not be called.');
@@ -57,7 +69,7 @@ export class HadithTagsComponent implements OnInit {
         toastr.error('Failed to delete entity. Please try again!');
       }
     });
-  };
+  };*/
 
   userHasDeletePermission() {
     return this.authService.loggedInUserHasPermission('delete_hadithtag');
