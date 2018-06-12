@@ -9,9 +9,9 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 import {
-  moduleDeclarations,
-  moduleImports,
-  moduleProviders
+  MODULE_DECLARATIONS,
+  MODULE_IMPORTS,
+  MODULE_PROVIDERS
 } from './app/app.module';
 
 declare const require: any;
@@ -26,9 +26,9 @@ getTestBed().initTestEnvironment(
 export function configureTestBed() {
   TestBed.configureTestingModule(
     {
-      declarations: moduleDeclarations,
-      imports: moduleImports,
-      providers: moduleProviders
+      declarations: MODULE_DECLARATIONS,
+      imports: MODULE_IMPORTS,
+      providers: MODULE_PROVIDERS
     }
   ).compileComponents();
 }

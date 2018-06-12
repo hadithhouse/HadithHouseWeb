@@ -6,7 +6,6 @@ import {HadithTagsComponent} from './hadith-tags.component';
 import {HadithTagsRoutingModule} from './hadith-tags-routing.module';
 import {CommonModule} from '@angular/common';
 import {HadithTagApiService} from '../../services/hadith-tag-api.service';
-import {AuthService} from '../../core/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import {PageNavComponent} from '../../page-nav/page-nav.component';
 import {ModalModule} from 'ngx-bootstrap';
