@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {navItems} from './../../_nav';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../core/auth.service';
 import {FacebookService, IFbMeResponse} from '../../services/facebook.service';
 import {Router} from '@angular/router';
 import {LoadingStatusHttpInterceptor} from '../../http-interceptors';

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../core/auth.service';
 import {
   HadithTag,
   HadithTagApiService
@@ -12,7 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as toastr from 'toastr';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-hadith-tags',

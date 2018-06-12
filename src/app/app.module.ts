@@ -41,9 +41,9 @@ import {
   HTTP_INTERCEPTOR_PROVIDERS,
   LoadingStatusHttpInterceptor
 } from './http-interceptors';
-import {AuthService} from './services/auth.service';
 import {UserApiService} from './services/user-api.service';
 import {HttpClientModule} from '@angular/common/http';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   imports: [
@@ -55,6 +55,7 @@ import {HttpClientModule} from '@angular/common/http';
     AppSidebarModule,
     BrowserModule,
     BsDropdownModule.forRoot(),
+    CoreModule.forRoot(),
     HttpClientModule,
     PerfectScrollbarModule,
     TabsModule.forRoot()
@@ -65,7 +66,6 @@ import {HttpClientModule} from '@angular/common/http';
     P404Component,
   ],
   providers: [
-    AuthService,
     FacebookService,
     // Interceptor for showing/hiding loading indicator.
     LoadingStatusHttpInterceptor,

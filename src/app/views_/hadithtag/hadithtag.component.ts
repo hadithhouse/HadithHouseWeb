@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {Location} from '@angular/common';
 import * as toastr from 'toastr';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../core/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import * as _ from 'lodash';

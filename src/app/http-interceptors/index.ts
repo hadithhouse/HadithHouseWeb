@@ -6,7 +6,7 @@ import {
 import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
-import {AuthService} from '../services/auth.service';
+import {AuthService} from '../core/auth.service';
 
 /**
  * HTTP interceptor which sets a flag indicating whether there are pending
