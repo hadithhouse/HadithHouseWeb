@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 import {
   PerfectScrollbarModule,
@@ -17,10 +16,6 @@ import {AppComponent} from './app.component';
 import {DefaultLayoutComponent} from './containers';
 
 import {P404Component} from './views/error/404.component';
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
 
 import {
   AppAsideModule,
@@ -44,35 +39,50 @@ import {
 import {UserApiService} from './services/user-api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
+import {APP_BASE_HREF} from '@angular/common';
+import {HadithTagsComponent} from './views/hadith-tags/hadith-tags.component';
+import {TruncatePipe} from './pipes/pipes';
+import {PageNavComponent} from './page-nav/page-nav.component';
+
+export const MODULE_IMPORTS = [
+  AppAsideModule,
+  AppBreadcrumbModule.forRoot(),
+  AppFooterModule,
+  AppHeaderModule,
+  AppRoutingModule,
+  AppSidebarModule,
+  BrowserModule,
+  BsDropdownModule.forRoot(),
+  CoreModule.forRoot(),
+  HttpClientModule,
+  PerfectScrollbarModule,
+  TabsModule.forRoot()
+];
+
+export const MODULE_DECLARATIONS = [
+  AppComponent,
+  DefaultLayoutComponent,
+  P404Component,
+  AppComponent,
+  TruncatePipe,
+  PageNavComponent
+];
+
+export const MODULE_PROVIDERS = [
+  FacebookService,
+  // Interceptor for showing/hiding loading indicator.
+  LoadingStatusHttpInterceptor,
+  HTTP_INTERCEPTOR_PROVIDERS,
+  // Specify the base URL for router.
+  {provide: APP_BASE_HREF, useValue: '/'},
+  // Hadith House API services
+  UserApiService
+];
 
 @NgModule({
-  imports: [
-    AppAsideModule,
-    AppBreadcrumbModule.forRoot(),
-    AppFooterModule,
-    AppHeaderModule,
-    AppRoutingModule,
-    AppSidebarModule,
-    BrowserModule,
-    BsDropdownModule.forRoot(),
-    CoreModule.forRoot(),
-    HttpClientModule,
-    PerfectScrollbarModule,
-    TabsModule.forRoot()
-  ],
-  declarations: [
-    AppComponent,
-    ...APP_CONTAINERS,
-    P404Component,
-  ],
-  providers: [
-    FacebookService,
-    // Interceptor for showing/hiding loading indicator.
-    LoadingStatusHttpInterceptor,
-    HTTP_INTERCEPTOR_PROVIDERS,
-    // Hadith House API services
-    UserApiService
-  ],
+  imports: MODULE_IMPORTS,
+  declarations: MODULE_DECLARATIONS,
+  providers: MODULE_PROVIDERS,
   bootstrap: [AppComponent]
 })
 export class AppModule {
