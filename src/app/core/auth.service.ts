@@ -23,7 +23,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {User} from './user-api.service';
+import {User} from '../services/user-api.service';
 
 @Injectable()
 export class AuthService {
