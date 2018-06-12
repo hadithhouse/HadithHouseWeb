@@ -3,24 +3,30 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <table class="table">
+          <table class="table" style="width: 100%;">
+            <thead>
+            <th></th>
+            <th>Tag</th>
+            <th>Last Updated On</th>
+            </thead>
             <tbody>
             <tr *ngFor="let tag of hadithTags; let i = index">
-              <td style="width: 90px;">
+              <td style="width: 1%; white-space: nowrap">
                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                         (click)="showDeleteDialog(i, deleteModal)" [hidden]="tag._isEditing">
                   <fa-icon [icon]="faMinus"></fa-icon>
                 </button>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" (click)="startEditing(i)"
-                        [hidden]="tag._isEditing">
-                  <fa-icon [icon]="faPencilAlt"></fa-icon>
-                </button>
-
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="cancelEditing(i)"
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" (click)="cancelEditing(i)"
                         [hidden]="!tag._isEditing">
                   <fa-icon [icon]="faTimes"></fa-icon>
                 </button>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" (click)="finishEditing(i)"
+
+                &nbsp;
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="startEditing(i)"
+                        [hidden]="tag._isEditing">
+                  <fa-icon [icon]="faPencilAlt"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="finishEditing(i)"
                         [hidden]="!tag._isEditing">
                   <fa-icon [icon]="faSave"></fa-icon>
                 </button>
@@ -28,6 +34,9 @@
               <td>
                 <span [hidden]="tag._isEditing">{{ tag.name }}</span>
                 <input [hidden]="!tag._isEditing" [(ngModel)]="tag.name"/>
+              </td>
+              <td style="width:1%; white-space: nowrap;">
+                {{ formatTime(tag.updated_on) }}
               </td>
             </tr>
             </tbody>

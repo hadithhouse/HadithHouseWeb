@@ -23,7 +23,7 @@ export const routes: Routes = [
     path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Hadith House'
     },
     children: [
       {

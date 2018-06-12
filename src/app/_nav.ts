@@ -6,6 +6,7 @@ export const navItems = [
   },
   {
     name: 'Hadith Tags',
-    url: '/hadithtags'
+    url: '/hadithtags',
+    icon: 'icon-tag',
   }
 ];

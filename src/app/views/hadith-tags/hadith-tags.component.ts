@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as toastr from 'toastr';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-hadith-tags',
@@ -46,7 +47,8 @@ export class HadithTagsComponent implements OnInit {
   private loadHadithTags() {
     this.hadithTagApi.query({
       limit: this.pageSize,
-      offset: (this.page - 1) * this.pageSize
+      offset: (this.page - 1) * this.pageSize,
+      ordering: '-updated_on'
     }).subscribe(pagedHadiths => {
       this.hadithTags = pagedHadiths.results;
       this.pageCount = Math.ceil(pagedHadiths.count / this.pageSize);
@@ -202,7 +204,11 @@ export class HadithTagsComponent implements OnInit {
         toastr.error('Failed to delete entity. Please try again!');
       }
     });
-  };
+  }
+
+  formatTime(utcTime: string) {
+    return moment(utcTime).local();
+  }
 
   /**
    * Determines whether the user has the permission to add entities.
