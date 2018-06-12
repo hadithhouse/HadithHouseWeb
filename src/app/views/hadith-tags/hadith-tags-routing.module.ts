@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: HadithTagsComponent,
     data: {
-      title: 'Home'
+      title: 'Hadith Tags'
     }
   }
 ];
