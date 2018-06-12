@@ -11,6 +11,9 @@ export class Entity {
   public added_on: string;
   public updated_on: string;
   public valid: boolean = null;
+  public _isEditing = false;
+  public _isAddingNew = false;
+
 // tslint:enable:variable-name
 
   /**
@@ -71,9 +74,43 @@ export class PagedResults<TEntity> {
 
 export abstract class RestApi<TEntity extends Entity> {
   abstract getUrl(id: number | string): string;
+
   abstract get httpClient(): HttpClient;
 
   protected constructor(private entityClass: new(...params: any[]) => TEntity) {
+  }
+
+  /**
+   * Wraps the response retrieved from the server in an entity class so it has
+   * the additional functionality provided by the class.
+   * @param {TEntity} response The response to be wrapped.
+   * @returns {TEntity} The wrapped response.
+   * @template TEntity
+   */
+  private wrapResultInEntityClass(response: TEntity): TEntity {
+    const wrappedEntity = new this.entityClass();
+    wrappedEntity.set(response);
+    return wrappedEntity;
+  }
+
+  /**
+   * Like {@link wrapResultInEntityClass) but for paged response.
+   * @param {PagedResults<TEntity>} response The response to be wrapped.
+   * @returns {PagedResults<TEntity>} The wrapped response.
+   * @template TEntity
+   */
+  private wrapPagedResultsInEntityClasses(response: PagedResults<TEntity>) {
+    const wrappedEntities = response.results.map(entity => {
+      const entity2 = new this.entityClass();
+      entity2.set(entity);
+      return entity2;
+    });
+    const wrappedPagedResults = new PagedResults<TEntity>();
+    wrappedPagedResults.next = response.next;
+    wrappedPagedResults.previous = response.previous;
+    wrappedPagedResults.count = response.count;
+    wrappedPagedResults.results = wrappedEntities;
+    return wrappedPagedResults;
   }
 
   /**
@@ -85,9 +122,7 @@ export abstract class RestApi<TEntity extends Entity> {
     const url = this.getUrl(id);
     return Observable.create((observer: Observer<TEntity>) => {
       this.httpClient.get<TEntity>(url).subscribe(entity => {
-        const entity2 = new this.entityClass();
-        entity2.set(entity);
-        observer.next(entity2);
+        observer.next(this.wrapResultInEntityClass(entity));
         observer.complete();
       }, error => {
         observer.error(error);
@@ -104,17 +139,39 @@ export abstract class RestApi<TEntity extends Entity> {
    */
   public query(query: any): Observable<PagedResults<TEntity>> {
     const url = this.getUrl(null);
-    return this.httpClient.get<PagedResults<TEntity>>(url, {params: query});
+    return Observable.create((observer: Observer<PagedResults<TEntity>>) => {
+      return this.httpClient.get<PagedResults<TEntity>>(url, {params: query})
+        .subscribe(response => {
+          observer.next(this.wrapPagedResultsInEntityClasses(response));
+          observer.complete();
+        }, error => {
+          observer.error(error);
+        });
+    });
   }
 
   public post(entity: TEntity): Observable<TEntity> {
     const url = this.getUrl(null);
-    return this.httpClient.post<TEntity>(url, entity);
+    return Observable.create((observer: Observer<TEntity>) => {
+      return this.httpClient.post<TEntity>(url, entity).subscribe(entity => {
+        observer.next(this.wrapResultInEntityClass(entity));
+        observer.complete();
+      }, error => {
+        observer.error(error);
+      });
+    });
   }
 
   public put(entity: TEntity): Observable<TEntity> {
-    const url = this.getUrl(null);
-    return this.httpClient.put<TEntity>(url, entity);
+    const url = this.getUrl(entity.id);
+    return Observable.create((observer: Observer<TEntity>) => {
+      return this.httpClient.put<TEntity>(url, entity).subscribe(entity => {
+        observer.next(this.wrapResultInEntityClass(entity));
+        observer.complete();
+      }, error => {
+        observer.error(error);
+      });
+    });
   }
 
   public delete(id: number): Observable<void> {

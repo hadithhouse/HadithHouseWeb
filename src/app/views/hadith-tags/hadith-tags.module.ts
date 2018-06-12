@@ -9,14 +9,23 @@ import {HadithTagApiService} from '../../services/hadith-tag-api.service';
 import {AuthService} from '../../services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import {PageNavComponent} from '../../page-nav/page-nav.component';
+import {ModalModule} from 'ngx-bootstrap';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {
+  FbAccessTokenInterceptor,
+  HTTP_INTERCEPTOR_PROVIDERS,
+  LoadingStatusHttpInterceptor
+} from '../../http-interceptors';
 
 @NgModule({
   imports: [
+    FontAwesomeModule,
     FormsModule,
     HadithTagsRoutingModule,
     HttpClientModule,
     CommonModule,
     BsDropdownModule,
+    ModalModule.forRoot(),
     ButtonsModule.forRoot(),
   ],
   declarations: [
@@ -25,7 +34,11 @@ import {PageNavComponent} from '../../page-nav/page-nav.component';
   ],
   providers: [
     HadithTagApiService,
-    AuthService
+    AuthService,
+    // Interceptor for showing/hiding loading indicator.
+    LoadingStatusHttpInterceptor,
+    FbAccessTokenInterceptor,
+    HTTP_INTERCEPTOR_PROVIDERS
   ]
 })
 export class HadithTagsModule {

@@ -7,8 +7,7 @@ import {Router, NavigationEnd} from '@angular/router';
 import {debounceTime, timeout} from 'rxjs/operators';
 
 // HadithHouse imports
-import {AuthService} from './services/auth.service';
-import {FacebookService, IFbMeResponse} from './services/facebook.service';
+import {FacebookService} from './services/facebook.service';
 import {LoadingStatusHttpInterceptor} from './http-interceptors';
 
 @Component({
@@ -21,8 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(private facebookService: FacebookService,
               private router: Router,
-              private loadingStatusInterceptor: LoadingStatusHttpInterceptor,
-              protected authService: AuthService) {
+              private loadingStatusInterceptor: LoadingStatusHttpInterceptor) {
   }
 
   ngOnInit() {

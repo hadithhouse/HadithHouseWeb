@@ -4,14 +4,31 @@
       <div class="card">
         <div class="card-body">
           <table class="table">
-            <thead>
-            <tr>
-              <th>Tag</th>
-            </tr>
-            </thead>
             <tbody>
-            <tr *ngFor="let tag of hadithTags">
-              <td>{{ tag.name }}</td>
+            <tr *ngFor="let tag of hadithTags; let i = index">
+              <td style="width: 90px;">
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                        (click)="showDeleteDialog(i, deleteModal)" [hidden]="tag._isEditing">
+                  <fa-icon [icon]="faMinus"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" (click)="startEditing(i)"
+                        [hidden]="tag._isEditing">
+                  <fa-icon [icon]="faPencilAlt"></fa-icon>
+                </button>
+
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="cancelEditing(i)"
+                        [hidden]="!tag._isEditing">
+                  <fa-icon [icon]="faTimes"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" (click)="finishEditing(i)"
+                        [hidden]="!tag._isEditing">
+                  <fa-icon [icon]="faSave"></fa-icon>
+                </button>
+              </td>
+              <td>
+                <span [hidden]="tag._isEditing">{{ tag.name }}</span>
+                <input [hidden]="!tag._isEditing" [(ngModel)]="tag.name"/>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -21,27 +38,25 @@
       </div>
     </div>
   </div>
-  <!--/.row-->
 </div>
 
-<!-- Delete Confirmation Dialog -->
-<div class="modal fade" id="deleteConfirmDialog" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmDialogLabel"
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmDialogLabel">Delete</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h4 class="modal-title">Delete</h4>
+        <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete the entity? This action cannot be undone.
+        <p>Are you sure you want to delete the entity? This action cannot be undone.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" (click)="deleteEntity()">Yes</button>
+        <button type="button" class="btn btn-secondary" (click)="deleteModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteEntity(deleteModal)">Delete</button>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
