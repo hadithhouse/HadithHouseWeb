@@ -42,7 +42,6 @@ import {CoreModule} from './core/core.module';
 import {APP_BASE_HREF} from '@angular/common';
 import {HadithTagsComponent} from './views/hadith-tags/hadith-tags.component';
 import {TruncatePipe} from './pipes/pipes';
-import {PageNavComponent} from './page-nav/page-nav.component';
 
 export const MODULE_IMPORTS = [
   AppAsideModule,
@@ -65,7 +64,6 @@ export const MODULE_DECLARATIONS = [
   P404Component,
   AppComponent,
   TruncatePipe,
-  PageNavComponent
 ];
 
 export const MODULE_PROVIDERS = [
