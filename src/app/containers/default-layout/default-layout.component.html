@@ -1,0 +1,63 @@
+<app-header
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/logo.png', width: 150, height: 40, alt: 'Hadith House Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/logo-min.png', width: 30, height: 30, alt: 'Hadith House Logo'}"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'lg'">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <a class="nav-link" href="javascript:void(0)">Dashboard</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="javascript:void(0)">Users</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="authService.isLoginStatusFetched && authService.fbAccessToken === null">
+      <a class="nav-link" href="javascript:void(0)" (click)="fbLogin()">Login with Facebook</a>
+    </li>
+    <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="authService.isLoginStatusFetched && authService.fbUserInfo !== null">
+      <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false"
+         dropdownToggle (click)="false">
+        <img [src]="authService.fbUserInfo.profilePicUrl" class="img-avatar" alt="admin@bootstrapmaster.com"/>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Account</strong></div>
+        <a class="dropdown-item" target="_blank" [href]="authService.fbUserInfo.link"><i class="fa fa-user"></i> Facebook Profile</a>
+        <a class="dropdown-item" href="javascript:void(0)" (click)="fbLogout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumb></app-breadcrumb>
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="false">
+    <tabset>
+      <tab>
+        <ng-template tabHeading><i class="icon-list"></i></ng-template>
+        <div class="list-group list-group-accent">
+          <div
+            class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+            Nothing new
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </app-aside>
+</div>
+<app-footer>
+  <span><a href="https://github.com/hadithhouse/">Hadith House</a> @ GitHub</span>
+</app-footer>

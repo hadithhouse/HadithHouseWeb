@@ -7,5 +7,6 @@
 export const environment = {
   production: false,
   fbAppId: '948235391925373',
-  apisUrl: 'http://api-dev.hadithhouse.net/apis/'
+  // apisUrl: 'http://api-dev.hadithhouse.net/apis/'
+  apisUrl: 'http://api.hadithhouse.net/apis/'
 };
