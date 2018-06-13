@@ -4,7 +4,8 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output, SimpleChange
+  Output,
+  SimpleChange
 } from '@angular/core';
 
 @Component({
@@ -27,10 +28,21 @@ export class PageNavComponent implements OnInit, OnChanges {
 
   pageRange(): number[] {
     const range: number[] = [];
-    const start = Math.max(this.page - 3, 0);
-    const end = Math.min(start + 4, this.pageCount - 1);
+    let start = this.page - 2;
+    let end = this.page + 2;
+    if (start < 1) {
+      end += (1 - start);
+      start = 1;
+    }
+    if (end > this.pageCount) {
+      start -= (end - this.pageCount);
+      end = this.pageCount;
+      if (start < 1) {
+        start = 1;
+      }
+    }
     for (let i = start; i <= end; i += 1) {
-      range.push(i + 1);
+      range.push(i);
     }
     return range;
   }
@@ -47,6 +59,7 @@ export class PageNavComponent implements OnInit, OnChanges {
   }
 
   // tslint:disable-next-line:no-empty
-  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
   }
+
 }
