@@ -32,16 +32,12 @@ import {AppRoutingModule} from './app.routing';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {FacebookService} from './services/facebook.service';
-import {
-  HTTP_INTERCEPTOR_PROVIDERS,
-  LoadingStatusHttpInterceptor
-} from './http-interceptors';
 import {UserApiService} from './services/user-api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
 import {APP_BASE_HREF} from '@angular/common';
-import {HadithTagsComponent} from './views/hadith-tags/hadith-tags.component';
 import {TruncatePipe} from './pipes/pipes';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 export const MODULE_IMPORTS = [
   AppAsideModule,
@@ -53,6 +49,7 @@ export const MODULE_IMPORTS = [
   BrowserModule,
   BsDropdownModule.forRoot(),
   CoreModule.forRoot(),
+  FontAwesomeModule,
   HttpClientModule,
   PerfectScrollbarModule,
   TabsModule.forRoot()
@@ -68,13 +65,10 @@ export const MODULE_DECLARATIONS = [
 
 export const MODULE_PROVIDERS = [
   FacebookService,
-  // Interceptor for showing/hiding loading indicator.
-  LoadingStatusHttpInterceptor,
-  HTTP_INTERCEPTOR_PROVIDERS,
   // Specify the base URL for router.
   {provide: APP_BASE_HREF, useValue: '/'},
   // Hadith House API services
-  UserApiService
+  UserApiService,
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, OnInit, Type} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
 import {
   HadithTag,
@@ -10,9 +10,10 @@ import {
   faSave,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpErrorResponse} from '@angular/common/http';
 import * as toastr from 'toastr';
 import * as moment from 'moment';
+import {LoadingStatusService} from '../../core/loading-status.service';
 
 @Component({
   selector: 'app-hadith-tags',
@@ -32,7 +33,8 @@ export class HadithTagsComponent implements OnInit {
   faTimes = faTimes;
 
   constructor(private hadithTagApi: HadithTagApiService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private injector: Injector) {
   }
 
   ngOnInit() {
@@ -61,7 +63,10 @@ export class HadithTagsComponent implements OnInit {
    * @returns {boolean} True or false.
    */
   validateEdits(tag: HadithTag): boolean {
-    toastr.info('The tag is being saved.');
+    if (!tag.name) {
+      toastr.error('Tag cannot be empty!');
+      return false;
+    }
     return true;
   }
 

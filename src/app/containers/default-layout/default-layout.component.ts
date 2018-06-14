@@ -1,26 +1,28 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {navItems} from './../../_nav';
+import {Component, OnInit} from '@angular/core';
+import {navItems} from '../../_nav';
 import {AuthService} from '../../core/auth.service';
 import {FacebookService, IFbMeResponse} from '../../services/facebook.service';
 import {Router} from '@angular/router';
-import {LoadingStatusHttpInterceptor} from '../../http-interceptors';
 import {UserApiService} from '../../services/user-api.service';
 import {timeout} from 'rxjs/operators';
+import {LoadingStatusService} from '../../core/loading-status.service';
+import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent implements OnInit {
-  public navItems = navItems;
-  public sidebarMinimized = true;
   private changes: MutationObserver;
-  public element: HTMLElement = document.body;
+  navItems = navItems;
+  sidebarMinimized = true;
+  element: HTMLElement = document.body;
+  isLoading = false;
+  faSyncAlt = faSyncAlt;
 
   constructor(private facebookService: FacebookService,
               private router: Router,
-              private loadingStatusInterceptor: LoadingStatusHttpInterceptor,
-              private changeDetector: ChangeDetectorRef,
+              private loadingStatusService: LoadingStatusService,
               private userService: UserApiService,
               protected authService: AuthService) {
     this.changes = new MutationObserver((mutations) => {
@@ -35,6 +37,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.initFbSdk();
+    this.loadingStatusService.isLoadingObservable().subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
   }
 
   private initFbSdk() {
@@ -77,12 +82,10 @@ export class DefaultLayoutComponent implements OnInit {
           // The user isn't logged in to Facebook.
           this.fbSetUser(null, null);
         }
-        this.changeDetector.detectChanges();
       },
       error => {
         console.error("Couldn't fetch login status.");
         this.authService.isLoginStatusFetched = false;
-        this.changeDetector.detectChanges();
       });
   }
 
@@ -106,7 +109,6 @@ export class DefaultLayoutComponent implements OnInit {
         } else {
           console.log('User cancelled login.');
         }
-        this.changeDetector.detectChanges();
       },
       (error) => {
         console.error('Failed to login to Facebook. Error: ' + error);
@@ -127,7 +129,6 @@ export class DefaultLayoutComponent implements OnInit {
       (/*response*/) => {
         console.log('User logged out.');
         this.fbSetUser(null, null);
-        this.changeDetector.detectChanges();
       });
   }
 
@@ -149,16 +150,12 @@ export class DefaultLayoutComponent implements OnInit {
 
         this.userService.get('current').subscribe(user => {
           this.authService.user = user;
-          this.changeDetector.detectChanges();
         });
-
-        this.changeDetector.detectChanges();
       },
       (error: any) => {
         console.error('Failed to fetch logged in user. Error: ' +
           JSON.stringify(error));
         this.authService.fbUserInfo = null;
-        this.changeDetector.detectChanges();
       }
     );
   }

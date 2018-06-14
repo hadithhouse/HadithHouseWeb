@@ -11,6 +11,9 @@
     <li class="nav-item px-3">
       <a class="nav-link" href="javascript:void(0)">Users</a>
     </li>
+    <li [hidden]="!isLoading" style="float: right;">
+      <fa-icon [icon]="faSyncAlt" [spin]="true" size="2x"></fa-icon>
+    </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="authService.isLoginStatusFetched && authService.fbAccessToken === null">
@@ -38,7 +41,8 @@
   <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-      <app-breadcrumb></app-breadcrumb>
+      <app-breadcrumb>
+      </app-breadcrumb>
     </ol>
     <div class="container-fluid">
       <router-outlet></router-outlet>

@@ -5,8 +5,8 @@ import {
 
 import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
-import {Subject} from 'rxjs/internal/Subject';
-import {AuthService} from '../core/auth.service';
+import {AuthService} from './auth.service';
+import {LoadingStatusService} from './loading-status.service';
 
 /**
  * HTTP interceptor which sets a flag indicating whether there are pending
@@ -15,37 +15,16 @@ import {AuthService} from '../core/auth.service';
  */
 @Injectable()
 export class LoadingStatusHttpInterceptor implements HttpInterceptor {
-  pendingRequests = 0;
-  static isLoading: Subject<boolean> = new Subject<boolean>();
+  constructor(private loadingStatusService: LoadingStatusService) {
+
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-    this.incrementPendingRequests();
+    this.loadingStatusService.incrementPendingRequests();
     return next.handle(req).pipe(finalize(() => {
-      this.decrementPendingRequests();
+      this.loadingStatusService.decrementPendingRequests();
     }));
-  }
-
-  // noinspection JSMethodCanBeStatic
-  isLoadingObservable(): Observable<boolean> {
-    return LoadingStatusHttpInterceptor.isLoading.asObservable();
-  }
-
-  private incrementPendingRequests() {
-    this.pendingRequests += 1;
-    if (this.pendingRequests === 1) {
-      LoadingStatusHttpInterceptor.isLoading.next(true);
-    }
-  }
-
-  private decrementPendingRequests() {
-    this.pendingRequests -= 1;
-    if (this.pendingRequests === 0) {
-      LoadingStatusHttpInterceptor.isLoading.next(false);
-    }
-    if (this.pendingRequests < 0) {
-      this.pendingRequests = 0;
-    }
   }
 }
 
@@ -70,17 +49,3 @@ export class FbAccessTokenInterceptor implements HttpInterceptor {
     }
   }
 }
-
-export const HTTP_INTERCEPTOR_PROVIDERS = [
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingStatusHttpInterceptor,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: FbAccessTokenInterceptor,
-    multi: true
-  }
-];
-
