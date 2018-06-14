@@ -1,6 +1,12 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AuthService} from './auth.service';
+import {LoadingStatusService} from './loading-status.service';
+import {
+  FbAccessTokenInterceptor,
+  LoadingStatusHttpInterceptor
+} from './interceptors';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -19,7 +25,22 @@ export class CoreModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: CoreModule,
-      providers: [AuthService]
+      providers: [
+        AuthService,
+        LoadingStatusService,
+        // Interceptor for showing/hiding loading indicator.
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: LoadingStatusHttpInterceptor,
+          multi: true
+        },
+        // Interceptor for adding FB access token to HTTP requests.
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: FbAccessTokenInterceptor,
+          multi: true
+        }
+      ]
     };
   }
 }
