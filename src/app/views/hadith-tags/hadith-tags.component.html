@@ -13,7 +13,9 @@
             <tr *ngFor="let tag of hadithTags; let i = index">
               <td style="width: 1%; white-space: nowrap">
                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                        (click)="showDeleteDialog(i, deleteModal)" [hidden]="tag._isEditing">
+                        (click)="showDeleteDialog(i, deleteModal)" [hidden]="tag._isEditing"
+                        [disabled]="!userHasDeletePermission()"
+                        [title]="!userHasDeletePermission() ? 'You don\'t have permission' : ''">
                   <fa-icon [icon]="faMinus"></fa-icon>
                 </button>
                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" (click)="cancelEditing(i)"
@@ -23,7 +25,8 @@
 
                 &nbsp;
                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="startEditing(i)"
-                        [hidden]="tag._isEditing">
+                        [hidden]="tag._isEditing" [disabled]="!userHasEditPermission()"
+                        [title]="!userHasEditPermission() ? 'You don\'t have permission' : ''">
                   <fa-icon [icon]="faPencilAlt"></fa-icon>
                 </button>
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="finishEditing(i)"

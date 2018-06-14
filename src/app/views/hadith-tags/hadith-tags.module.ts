@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
@@ -22,7 +21,6 @@ import {WidgetsModule} from '../../widgets/widgets.module';
     FontAwesomeModule,
     FormsModule,
     HadithTagsRoutingModule,
-    HttpClientModule,
     ModalModule.forRoot(),
     WidgetsModule
   ],
