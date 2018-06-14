@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { LoadingStatusService } from './loading-status.service';
+import {LoadingStatusService} from './loading-status.service';
 
 describe('LoadingStatusService', () => {
   beforeEach(() => {
@@ -9,7 +9,8 @@ describe('LoadingStatusService', () => {
     });
   });
 
-  it('should be created', inject([LoadingStatusService], (service: LoadingStatusService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject([LoadingStatusService],
+    (service: LoadingStatusService) => {
+      expect(service).toBeTruthy();
+    }));
 });
