@@ -19,21 +19,51 @@ describe('LoadingStatusService', () => {
       expect(service.pendingRequests).toBe(0);
     }));
 
-  it('incrementPendingRequests() on 0 pending requests causes ' +
-    'isLoadingObservable() to get a true next value.',
+  it('isLoadingObservable() sends true when request count goes above 0 and ' +
+    'false when request count goes down to 0',
     inject([LoadingStatusService], (service: LoadingStatusService) => {
       // Increment pending requests count and ensure isLoadingObservable()
       // gets a true value.
-      service.incrementPendingRequests();
-      service.isLoadingObservable().subscribe(isLoading => {
+      let s1Called = false;
+      const s1 = service.isLoadingObservable().subscribe(isLoading => {
         expect(isLoading).toBe(true);
-      }).unsubscribe();
+        s1Called = true;
+      });
+      service.incrementPendingRequests();
+      s1.unsubscribe();
+      expect(s1Called).toBeTruthy();
+
+      let s2Called = false;
+      const s2 = service.isLoadingObservable().subscribe(isLoading => {
+        fail('A true value for isLoading was already sent when request count ' +
+          'became 1.');
+        s2Called = true;
+      });
+      service.incrementPendingRequests();
+      s2.unsubscribe();
+      expect(s2Called).toBeFalsy();
 
       // Decrement pending requests count and ensure isLoadingObservable()
       // gets a false value now.
+      let s3Called = false;
+      const s3 = service.isLoadingObservable().subscribe(isLoading => {
+        fail('A true value for isLoading was already sent when request count ' +
+          'became 1.');
+        s3Called = true;
+      });
       service.decrementPendingRequests();
-      service.isLoadingObservable().subscribe(isLoading => {
+      s3.unsubscribe();
+      expect(s3Called).toBeFalsy();
+
+      // Decrement pending requests count and ensure isLoadingObservable()
+      // gets a false value now.
+      let s4Called = false;
+      const s4 = service.isLoadingObservable().subscribe(isLoading => {
         expect(isLoading).toBe(false);
-      }).unsubscribe();
+        s4Called = true;
+      });
+      service.decrementPendingRequests();
+      s4.unsubscribe();
+      expect(s4Called).toBeTruthy();
     }));
 });
