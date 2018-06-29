@@ -5,15 +5,15 @@ import {
   HadithTagApiService
 } from '../../services/hadith-tag-api.service';
 import {
+  faPlus,
   faMinus,
   faPencilAlt,
   faSave,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import {HTTP_INTERCEPTORS, HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import * as toastr from 'toastr';
 import * as moment from 'moment';
-import {LoadingStatusService} from '../../core/loading-status.service';
 
 @Component({
   selector: 'app-hadith-tags',
@@ -27,6 +27,8 @@ export class HadithTagsComponent implements OnInit {
   page = 0;
   pageSize = 10;
   pageCount = 1;
+  // Icons
+  faPlus = faPlus;
   faMinus = faMinus;
   faPencilAlt = faPencilAlt;
   faSave = faSave;
@@ -70,6 +72,15 @@ export class HadithTagsComponent implements OnInit {
     return true;
   }
 
+  addNew() {
+    const newTag = new HadithTag();
+    const newTagCopy = new HadithTag();
+    newTag._isAddingNew = true;
+    newTag._isEditing = true;
+    this.hadithTags.unshift(newTag);
+    this.hadithTagsCopies.unshift(newTagCopy);
+  }
+
   /**
    * Starts editing an entity.
    * @param {number} index The index of the entity to edit.
@@ -88,9 +99,15 @@ export class HadithTagsComponent implements OnInit {
    */
   cancelEditing(index: number) {
     const tag = this.hadithTags[index];
-    const tagCopy = this.hadithTagsCopies[index];
-    tag.set(tagCopy);
-    tag._isEditing = false;
+
+    if (tag._isAddingNew) {
+      this.hadithTags.splice(index, 1);
+      this.hadithTagsCopies.splice(index, 1);
+    } else {
+      const tagCopy = this.hadithTagsCopies[index];
+      tag.set(tagCopy);
+      tag._isEditing = false;
+    }
   }
 
   /**
@@ -100,7 +117,7 @@ export class HadithTagsComponent implements OnInit {
   finishEditing(index: number) {
     const tag = this.hadithTags[index];
     const tagCopy = this.hadithTagsCopies[index];
-    if (tag.equals(tagCopy)) {
+    if (!tag._isAddingNew && tag.equals(tagCopy)) {
       tag._isEditing = false;
       tag._isAddingNew = false;
       return;
