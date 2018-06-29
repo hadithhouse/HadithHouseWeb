@@ -5,13 +5,37 @@
         <div class="card-body">
           <table class="table" style="width: 100%;">
             <thead>
-            <th></th>
             <th>Tag</th>
             <th>Last Updated On</th>
+            <th>
+              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="addNew()"
+                      [title]="!userHasAddPermission() ? 'You don\'t have permission' : ''">
+                <fa-icon [icon]="faPlus"></fa-icon>
+              </button>
+            </th>
             </thead>
             <tbody>
             <tr *ngFor="let tag of hadithTags; let i = index">
+              <td>
+                <span [hidden]="tag._isEditing">{{ tag.name }}</span>
+                <input [hidden]="!tag._isEditing" [(ngModel)]="tag.name"/>
+              </td>
+              <td style="width:1%; white-space: nowrap;">
+                {{ formatTime(tag.updated_on) }}
+              </td>
               <td style="width: 1%; white-space: nowrap">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="startEditing(i)"
+                        [hidden]="tag._isEditing" [disabled]="!userHasEditPermission()"
+                        [title]="!userHasEditPermission() ? 'You don\'t have permission' : ''">
+                  <fa-icon [icon]="faPencilAlt"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="finishEditing(i)"
+                        [hidden]="!tag._isEditing">
+                  <fa-icon [icon]="faSave"></fa-icon>
+                </button>
+
+                &nbsp;
+
                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                         (click)="showDeleteDialog(i, deleteModal)" [hidden]="tag._isEditing"
                         [disabled]="!userHasDeletePermission()"
@@ -22,24 +46,6 @@
                         [hidden]="!tag._isEditing">
                   <fa-icon [icon]="faTimes"></fa-icon>
                 </button>
-
-                &nbsp;
-                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="startEditing(i)"
-                        [hidden]="tag._isEditing" [disabled]="!userHasEditPermission()"
-                        [title]="!userHasEditPermission() ? 'You don\'t have permission' : ''">
-                  <fa-icon [icon]="faPencilAlt"></fa-icon>
-                </button>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="finishEditing(i)"
-                        [hidden]="!tag._isEditing">
-                  <fa-icon [icon]="faSave"></fa-icon>
-                </button>
-              </td>
-              <td>
-                <span [hidden]="tag._isEditing">{{ tag.name }}</span>
-                <input [hidden]="!tag._isEditing" [(ngModel)]="tag.name"/>
-              </td>
-              <td style="width:1%; white-space: nowrap;">
-                {{ formatTime(tag.updated_on) }}
               </td>
             </tr>
             </tbody>
