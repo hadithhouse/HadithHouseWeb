@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Entity, RestApi} from './hadith-house-api-base';
 import * as _ from 'lodash';
 import {environment} from '../../environments/environment';
+import {HadithTag} from './hadith-tag-api.service';
 
 export class Hadith extends Entity {
 // tslint:disable:variable-name
@@ -12,7 +13,7 @@ export class Hadith extends Entity {
   public volume: number;
   public chapter: number;
   public section: number;
-  public tags: number[];
+  public tags: (number | HadithTag)[];
 
 // tslint:enable:variable-name
 

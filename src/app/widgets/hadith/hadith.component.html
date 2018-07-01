@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="hadith">
+      {{ hadith.text }}
+    </div>
+  </div>
+  <div class="card-footer">
+    <div *ngIf="hadith">
+        <span style="margin-right: 3px;" class="badge badge-success float-right" *ngFor="let tag of hadith.tags">
+          {{ tag.name }}
+        </span>
+    </div>
+  </div>
+</div>
