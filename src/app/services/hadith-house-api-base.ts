@@ -116,17 +116,29 @@ export abstract class RestApi<TEntity extends Entity> {
   /**
    * Retrieves the entities having the given IDs.
    * @param id The ID of the entity to retrieve.
+   * @param queryParams A dictionary of URL parameters.
    * @returns An observable for the entity to be retrieved.
    */
-  public get(id: number | string): Observable<TEntity> {
+  public get(id: number | string, queryParams?: any): Observable<TEntity> {
     const url = this.getUrl(id);
     return Observable.create((observer: Observer<TEntity>) => {
-      this.httpClient.get<TEntity>(url).subscribe(entity => {
-        observer.next(this.wrapResultInEntityClass(entity));
-        observer.complete();
-      }, error => {
-        observer.error(error);
-      });
+      if (queryParams) {
+        this.httpClient.get<TEntity>(url, {params: queryParams})
+          .subscribe(entity => {
+            observer.next(this.wrapResultInEntityClass(entity));
+            observer.complete();
+          }, error => {
+            observer.error(error);
+          });
+      } else {
+        this.httpClient.get<TEntity>(url)
+          .subscribe(entity => {
+            observer.next(this.wrapResultInEntityClass(entity));
+            observer.complete();
+          }, error => {
+            observer.error(error);
+          });
+      }
     });
   }
 
