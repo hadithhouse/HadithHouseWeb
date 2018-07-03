@@ -2,11 +2,6 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HadithComponent} from './hadith.component';
 import {Hadith, HadithApiService} from '../../services/hadith-api.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from '@angular/common/http/testing';
-import {HttpClient} from '@angular/common/http';
 import {of} from 'rxjs/internal/observable/of';
 
 describe('HadithComponent', () => {

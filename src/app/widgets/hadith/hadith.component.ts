@@ -7,14 +7,21 @@ import {Hadith, HadithApiService} from '../../services/hadith-api.service';
   styleUrls: ['./hadith.component.css']
 })
 export class HadithComponent implements OnInit {
-  @Input('hadith-id') hadithId: number | 'random';
-  hadith: Hadith;
+  @Input('hadith-id') hadithId: number | 'random' = null;
+  @Input('hadith') hadith: Hadith = null;
 
-  constructor(private hadithApi: HadithApiService) { }
+  constructor(private hadithApi: HadithApiService) {
+  }
 
   ngOnInit() {
-    this.hadithApi.get(this.hadithId, {expand: true}).subscribe(hadith => {
-      this.hadith = hadith;
-    });
+    if (!this.hadith && !this.hadithId) {
+      throw new Error("Either 'hadith' or 'hadith-id' should be set " +
+        'for <hh-hadith>.');
+    }
+    if (!this.hadith) {
+      this.hadithApi.get(this.hadithId, {expand: true}).subscribe(hadith => {
+        this.hadith = hadith;
+      });
+    }
   }
 }
