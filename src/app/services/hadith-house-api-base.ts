@@ -51,6 +51,22 @@ export class Entity {
  * Data contract for paged results returned from Hadith House API (Django).
  */
 export class PagedResults<TEntity> {
+  constructor(results?: TEntity[], count?: number, next?: string,
+              previous?: string) {
+    if (results) {
+      this.results = results;
+    }
+    if (count) {
+      this.count = count;
+    }
+    if (next) {
+      this.next = next;
+    }
+    if (previous) {
+      this.previous = previous;
+    }
+  }
+
   /**
    * The total number of results.
    */

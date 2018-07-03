@@ -1,8 +1,8 @@
 import * as $ from 'jquery';
 import * as _ from 'lodash';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageNavComponent } from './page-nav.component';
+import {PageNavComponent} from './page-nav.component';
 
 describe('PageNavComponent', () => {
   let component: PageNavComponent;
@@ -11,7 +11,7 @@ describe('PageNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageNavComponent ]
+      declarations: [PageNavComponent]
     }).compileComponents();
   }));
 
