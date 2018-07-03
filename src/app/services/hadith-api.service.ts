@@ -31,14 +31,17 @@ export class Hadith extends Entity {
 
   public equals(entity: Entity): boolean {
     const casted = <Hadith>entity;
-    return this.id === casted.id &&
-      this.text === casted.text &&
-      this.person === casted.person &&
-      this.book === casted.book &&
-      this.volume === casted.volume &&
-      this.chapter === casted.chapter &&
-      this.section === casted.section &&
-      _.isEqual(this.tags.slice().sort(), casted.tags.slice().sort());
+    return _.eq(this.id, casted.id) &&
+      _.eq(this.text, casted.text) &&
+      _.eq(this.person, casted.person) &&
+      _.eq(this.book, casted.book) &&
+      _.eq(this.volume, casted.volume) &&
+      _.eq(this.chapter, casted.chapter) &&
+      _.eq(this.section, casted.section) &&
+      (
+        (!this.tags && !casted.tags) ||
+        (_.isEqual(this.tags.slice().sort(), casted.tags.slice().sort()))
+      );
   }
 }
 
