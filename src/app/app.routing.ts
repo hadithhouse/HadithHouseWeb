@@ -35,6 +35,10 @@ export const routes: Routes = [
         loadChildren: './views/hadiths/hadiths.module#HadithsModule'
       },
       {
+        path: 'hadiths/:id',
+        loadChildren: './views/hadith/hadith.module#HadithModule'
+      },
+      {
         path: 'hadithtags',
         loadChildren: './views/hadith-tags/hadith-tags.module#HadithTagsModule'
       },
