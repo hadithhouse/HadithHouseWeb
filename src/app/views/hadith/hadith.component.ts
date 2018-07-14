@@ -7,13 +7,21 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./hadith.component.css']
 })
 export class HadithComponent implements OnInit {
-  id: any;
+  id: number = null;
 
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
+    this.route.paramMap.subscribe(paramMap => {
+      if (paramMap.has('id')) {
+        this.id = parseInt(paramMap.get('id'));
+        if (isNaN(this.id)) {
+          throw new Error('Invalid ID.');
+        }
+      } else {
+        this.id = null;
+      }
+    });
   }
 }
