@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HadithTagsComponent} from './hadith-tags.component';
-import {configureTestBed} from '../../../test';
 
 describe('HadithTagsComponent', () => {
   let component: HadithTagsComponent;
@@ -13,9 +12,8 @@ describe('HadithTagsComponent', () => {
     // just enough dependencies to run the tests?
     // configureTestBed();
     TestBed.configureTestingModule({
-      declarations: [ HadithTagsComponent ]
-    })
-    .compileComponents();
+      declarations: [HadithTagsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
