@@ -1,6 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HadithComponent } from './hadith.component';
+import {HadithComponent} from './hadith.component';
+import {ActivatedRoute, convertToParamMap} from '@angular/router';
+import {of} from 'rxjs/internal/observable/of';
+
+class ActivatedRouteMock {
+  paramMap = of(convertToParamMap({
+    id: '1'
+  }));
+}
 
 describe('HadithComponent', () => {
   let component: HadithComponent;
@@ -8,9 +16,14 @@ describe('HadithComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HadithComponent ]
-    })
-    .compileComponents();
+      declarations: [HadithComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useClass: ActivatedRouteMock
+        }
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
