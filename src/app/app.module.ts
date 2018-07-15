@@ -38,6 +38,7 @@ import {CoreModule} from './core/core.module';
 import {APP_BASE_HREF} from '@angular/common';
 import {TruncatePipe} from './pipes/pipes';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {WidgetsModule} from './widgets/widgets.module';
 
 export const MODULE_IMPORTS = [
   AppAsideModule,
@@ -52,6 +53,7 @@ export const MODULE_IMPORTS = [
   FontAwesomeModule,
   HttpClientModule,
   PerfectScrollbarModule,
+  WidgetsModule,
   TabsModule.forRoot()
 ];
 

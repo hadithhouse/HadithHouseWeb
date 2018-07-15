@@ -35,8 +35,7 @@ export class HadithTagsComponent implements OnInit {
   faTimes = faTimes;
 
   constructor(private hadithTagApi: HadithTagApiService,
-              private authService: AuthService,
-              private injector: Injector) {
+              private authService: AuthService) {
   }
 
   ngOnInit() {

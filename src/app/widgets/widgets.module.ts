@@ -8,11 +8,18 @@ import {
 } from './entity-selector/entity-selector.component';
 import {FormsModule} from '@angular/forms';
 import {HadithTagApiService} from '../services/hadith-tag-api.service';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from '../app.routing';
+import {AppModule} from '../app.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule,
+    // No routing in this module, but importing for routerLink directive
+    RouterModule.forChild([])
   ],
   providers: [
     HadithApiService,

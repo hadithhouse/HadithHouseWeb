@@ -31,12 +31,12 @@ export const routes: Routes = [
         loadChildren: './views/home/home.module#HomeModule'
       },
       {
-        path: 'hadiths',
-        loadChildren: './views/hadiths/hadiths.module#HadithsModule'
-      },
-      {
         path: 'hadiths/:id',
         loadChildren: './views/hadith/hadith.module#HadithModule'
+      },
+      {
+        path: 'hadiths',
+        loadChildren: './views/hadiths/hadiths.module#HadithsModule'
       },
       {
         path: 'hadithtags',
