@@ -3,6 +3,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HadithComponent} from './hadith.component';
 import {Hadith, HadithApiService} from '../../services/hadith-api.service';
 import {of} from 'rxjs/internal/observable/of';
+import {FaIconComponentStub} from '../../stubs';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('HadithComponent', () => {
   let component: HadithComponent;
@@ -19,8 +21,12 @@ describe('HadithComponent', () => {
     mockHadithApiService();
 
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [
-        HadithComponent
+        HadithComponent,
+        FaIconComponentStub
       ],
       providers: [
         {

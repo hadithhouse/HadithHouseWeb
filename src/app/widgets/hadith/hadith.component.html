@@ -6,9 +6,12 @@
   </div>
   <div class="card-footer">
     <div *ngIf="hadith">
-        <span style="margin-right: 3px;" class="badge badge-success float-right" *ngFor="let tag of hadith.tags">
-          {{ tag.name }}
-        </span>
+      <a routerLink="/hadiths/{{hadith.id}}">
+        <fa-icon [icon]="faExpand"></fa-icon>
+      </a>
+      <span style="margin-right: 3px;" class="badge badge-success float-right" *ngFor="let tag of hadith.tags">
+        {{ tag.name }}
+      </span>
     </div>
   </div>
 </div>
