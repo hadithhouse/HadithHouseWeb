@@ -13,6 +13,7 @@ import {
 } from '../../services/hadith-tag-api.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {map} from 'rxjs/operators';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'hh-entity-selector',
@@ -20,7 +21,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./entity-selector.component.css']
 })
 export class EntitySelectorComponent implements OnInit {
-  @Input('mode') selectionMode: 'single' | 'multi';
+  @Input('mode') selectionMode: 'single' | 'multi' = 'multi';
   @Input('ids') entitiesIds: number[];
   @Output('selection-changed') selectionChanged =
     new EventEmitter<number[]>();
@@ -29,14 +30,12 @@ export class EntitySelectorComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
   text: string;
   autoCompleteEntries: any[];
+  faTimes = faTimes;
 
   constructor(private hadithTagApi: HadithTagApiService) {
   }
 
   ngOnInit() {
-    if (!this.selectionMode) {
-      this.selectionMode = 'multi';
-    }
     if (!this.entitiesIds || this.entitiesIds.length === 0) {
       this.entitiesIds = [];
       this.entities = [];
