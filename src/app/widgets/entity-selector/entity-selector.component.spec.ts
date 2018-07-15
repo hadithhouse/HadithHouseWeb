@@ -7,6 +7,7 @@ import {
   HadithTagApiService
 } from '../../services/hadith-tag-api.service';
 import {FormsModule} from '@angular/forms';
+import {FaIconComponentStub} from '../../stubs';
 
 describe('EntitySelectorComponent', () => {
   let component: EntitySelectorComponent;
@@ -26,7 +27,8 @@ describe('EntitySelectorComponent', () => {
         FormsModule
       ],
       declarations: [
-        EntitySelectorComponent
+        EntitySelectorComponent,
+        FaIconComponentStub
       ],
       providers: [
         {

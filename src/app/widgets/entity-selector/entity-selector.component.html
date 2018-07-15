@@ -2,14 +2,14 @@
   <span class="hh-entity-selector-tags" *ngFor="let entity of entities; let i = index">
     <span class="badge badge-primary">
       {{ entity.toString() }}
-      <span class="btn-sm fa fa-times" (click)="deleteEntity(i)" aria-hidden="true" style="cursor: pointer;">
-
-      </span>
+      <a (click)="deleteEntity(i)" style="cursor: pointer;">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </a>
     </span>
   </span>
   <span #autoCompleteDropDown class="dropdown hh-entity-selector-input">
     <input #input type="text" [(ngModel)]="text" (ngModelChange)="textChanged()"
-           (keypress)="onKey($event)" (keydown)="onKey($event)"/>
+           (keypress)="onKey($event)" (keydown)="onKey($event)" />
     <span class="dropdown-menu">
       <a class="dropdown-item" *ngFor="let entity of autoCompleteEntries" href="#" (click)="addEntity(entity)">
         {{ entity.toString() }}
