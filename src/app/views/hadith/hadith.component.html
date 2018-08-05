@@ -54,9 +54,18 @@
     <!--</div>-->
 
     <div class="row">
-      <div class="form-group col-sm-12">
+      <div class="form-group col-sm-12" [hidden]="!isEditing">
         <label>Tags</label>
-        <hh-entity-selector [ids]="hadith.tags"></hh-entity-selector>
+        <div>
+          <hh-entity-selector [ids]="hadith.tags"></hh-entity-selector>
+        </div>
+      </div>
+      <div class="form-group col-sm-12" [hidden]="isEditing" >
+        <label>Tags</label>
+        <div>
+          <hh-entity-label [entity-id]="tag" entity-type="hadithtag"
+                           *ngFor="let tag of hadith.tags"></hh-entity-label>
+        </div>
       </div>
     </div>
   </div>

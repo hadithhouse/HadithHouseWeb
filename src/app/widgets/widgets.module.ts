@@ -10,8 +10,8 @@ import {FormsModule} from '@angular/forms';
 import {HadithTagApiService} from '../services/hadith-tag-api.service';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterModule} from '@angular/router';
-import {AppRoutingModule} from '../app.routing';
-import {AppModule} from '../app.module';
+import {EntityLabelComponent} from './entity-label/entity-label.component';
+import {BookApiService} from '../services/book-api.service';
 
 @NgModule({
   imports: [
@@ -22,15 +22,18 @@ import {AppModule} from '../app.module';
     RouterModule.forChild([])
   ],
   providers: [
+    BookApiService,
     HadithApiService,
     HadithTagApiService,
   ],
   declarations: [
+    EntityLabelComponent,
     EntitySelectorComponent,
     HadithComponent,
     PageNavComponent
   ],
   exports: [
+    EntityLabelComponent,
     EntitySelectorComponent,
     HadithComponent,
     PageNavComponent
