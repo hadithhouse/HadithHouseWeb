@@ -25,7 +25,6 @@ export class EntityLabelComponent implements OnInit {
 
   ngOnInit() {
     if (!this.entityId) {
-      debugger;
       throw new Error("'id' must be specified when using <hh-entity-label>.");
     }
     if (!this.entityType) {
