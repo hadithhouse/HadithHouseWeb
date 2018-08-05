@@ -9,6 +9,7 @@
             <th>Last Updated On</th>
             <th>
               <button type="button" class="btn btn-success btn-sm" data-toggle="modal" (click)="addNew()"
+                      [disabled]="!userHasAddPermission()"
                       [title]="!userHasAddPermission() ? 'You don\'t have permission' : ''">
                 <fa-icon [icon]="faPlus"></fa-icon>
               </button>
