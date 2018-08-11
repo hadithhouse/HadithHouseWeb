@@ -11,8 +11,11 @@ export class Entity {
   public added_on: string;
   public updated_on: string;
   public valid: boolean = null;
+  // TODO: In RestApi class, remove those fields before posting/putting the
+  // entity.
   public _isEditing = false;
   public _isAddingNew = false;
+  public _copy: Entity = null;
 
 // tslint:enable:variable-name
 
