@@ -8,16 +8,17 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from '../../core/auth.service';
+import {EntityEditingComponent} from '../EntityEditingComponent';
 
 @Component({
   selector: 'app-hadith',
   templateUrl: './hadith.component.html',
   styleUrls: ['./hadith.component.css']
 })
-export class HadithComponent implements OnInit {
+export class HadithComponent extends EntityEditingComponent<Hadith>
+  implements OnInit {
   id: number = null;
   hadith: Hadith = null;
-  isEditing = false;
   // Icons
   faMinus = faMinus;
   faPencilAlt = faPencilAlt;
@@ -25,8 +26,9 @@ export class HadithComponent implements OnInit {
   faTimes = faTimes;
 
   constructor(private route: ActivatedRoute,
-              private authService: AuthService,
-              private hadithApi: HadithApiService) {
+              private hadithApi: HadithApiService,
+              authService: AuthService) {
+    super(hadithApi, Hadith, authService, 'hadith');
   }
 
   ngOnInit() {
@@ -49,43 +51,12 @@ export class HadithComponent implements OnInit {
     });
   }
 
-  startEditing() {
-    this.isEditing = true;
+  onTagDeleted(ids: number[]) {
+    this.hadith.tags = ids;
   }
 
-  finishEditing() {
-    this.isEditing = false;
-  }
-
-  cancelEditing() {
-    this.isEditing = false;
-  }
-
-  showDeleteDialog(dialog: any) {
-    if (!this.authService.loggedInUserHasPermission('delete_hadith')) {
-      throw new Error("The logged in user doesn't have permission to delete " +
-        'hadith, so this method should not be called.');
-    }
-    dialog.show();
-  }
-
-  deleteHadith() {
-    throw new Error('Not implemented yet');
-  }
-
-  /**
-   * Determines whether the user has the permission to edit entities.
-   * @returns {boolean} True or false.
-   */
-  userHasEditPermission(): boolean {
-    return this.authService.loggedInUserHasPermission('change_hadith');
-  }
-
-  /**
-   * Determines whether the user has the permission to delete entities.
-   * @returns {boolean} True or false.
-   */
-  userHasDeletePermission(): boolean {
-    return this.authService.loggedInUserHasPermission('delete_hadith');
+  validateEdits(entity: Hadith): boolean {
+    // TODO: Add validation.
+    return true;
   }
 }
