@@ -1,7 +1,6 @@
 import {AuthService} from '../core/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as toastr from 'toastr';
-import * as moment from 'moment';
 import {Entity, RestApi} from '../services/hadith-house-api-base';
 
 export abstract class EntityEditingComponent<TEntity extends Entity> {
