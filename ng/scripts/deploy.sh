@@ -26,8 +26,8 @@ log "Deleting the content of '${DEPLOYMENT_PATH}'"
 rm -rf $DEPLOYMENT_PATH/*
 
 # Copy the project onto the deployment directory.
-log "Copying `pwd`/build/* to $DEPLOYMENT_PATH..."
-cp -r ./build/* $DEPLOYMENT_PATH/
+log "Copying `pwd`/dist/* to $DEPLOYMENT_PATH..."
+cp -r ./dist/* $DEPLOYMENT_PATH/
 
 # Change directory to deployment directory.
 cd $DEPLOYMENT_PATH

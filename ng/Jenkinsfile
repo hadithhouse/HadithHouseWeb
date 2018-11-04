@@ -14,15 +14,21 @@ pipeline {
       }
     }
 
+    stage('Lint') {
+      steps {
+        sh('npm run lint')
+      }
+    }
+
     stage('Test') {
       steps {
         sh('npm run test')
       }
     }
 
-    stage('Build') {
+    stage('Build Dev') {
       steps {
-        sh('npm run build')
+        sh('npm run build-dev')
       }
     }
 
@@ -33,7 +39,7 @@ pipeline {
       }
       steps {
         echo('Archive  folder')
-        sh('zip -qr /tmp/HadithHouseWeb.zip build/ scripts/')
+        sh('zip -qr /tmp/HadithHouseWeb.zip dist/ scripts/')
 
         echo('Copy the archive to dev.hadithhouse.net for deployment')
         sh('''scp /tmp/HadithHouseWeb.zip deployer@dev.hadithhouse.net:/tmp/HadithHouseWeb.zip
@@ -59,7 +65,17 @@ exit $?
       }
     }
 
-/*
+    stage('Build Prod') {
+      when {
+        // Deploy only when the branch being built is master.
+        expression { env.BRANCH_NAME == 'master' }
+      }
+      steps {
+        sh('rm -rf dist/')
+        sh('npm run build')
+      }
+    }
+
     stage('Deploy Prod') {
       when {
         // Deploy only when the branch being built is master.
@@ -67,7 +83,7 @@ exit $?
       }
       steps {
         echo('Archive  folder')
-        sh('zip -qr /tmp/HadithHouseWeb.zip build/ scripts/')
+        sh('zip -qr /tmp/HadithHouseWeb.zip dist/ scripts/')
 
         echo('Copy the archive to www.hadithhouse.net for deployment')
         sh('''scp /tmp/HadithHouseWeb.zip deployer@www.hadithhouse.net:/tmp/HadithHouseWeb.zip
@@ -92,6 +108,5 @@ exit $?
 ''')
       }
     }
-*/
   }
 }
