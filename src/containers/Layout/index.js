@@ -9,6 +9,7 @@ import { closeNavDrawer, openNavDrawer } from "./actions";
 import { connect } from "react-redux";
 import layoutReducer from "./reducer";
 import { Router } from "./components/Router";
+import { Hidden } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -49,11 +50,21 @@ class Layout extends React.Component {
           onDrawerClicked={openNavDrawer}
           title={"Hadith House"}
         />
-        <NavDrawer
-          open={layout.isNavDrawerOpen}
-          onClose={closeNavDrawer}
-          onClick={this.onNavItemClicked}
-        />
+        <Hidden smUp implementation="css">
+          <NavDrawer
+            autoHide={true}
+            open={layout.isNavDrawerOpen}
+            onClose={closeNavDrawer}
+            onClick={this.onNavItemClicked}
+          />
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <NavDrawer
+            autoHide={false}
+            open={true}
+            onClick={this.onNavItemClicked}
+          />
+        </Hidden>
         <main className={classes.content}>
           <div className={classes.drawerHeader} />
           <Router />

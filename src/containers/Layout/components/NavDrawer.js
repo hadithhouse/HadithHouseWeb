@@ -4,12 +4,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { PAGES } from "../pages";
+
+import logo from "./logo.png";
 
 const drawerWidth = 240;
 
@@ -26,14 +26,18 @@ const styles = theme => ({
     alignItems: "center",
     padding: "0 12px",
     ...theme.mixins.toolbar
+  },
+  logo: {
+    width: "100%",
+    cursor: "pointer"
   }
 });
 
-function NavDrawer({ classes, onClick, onClose, open }) {
+function NavDrawer({ autoHide, classes, onClick, onClose, open }) {
   return (
     <Drawer
       className={classes.drawer}
-      variant="temporary"
+      variant={autoHide ? "temporary" : "permanent"}
       anchor="left"
       open={open}
       onClose={onClose}
@@ -42,9 +46,15 @@ function NavDrawer({ classes, onClick, onClose, open }) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <IconButton onClick={onClose}>
-          <MenuIcon />
-        </IconButton>
+        <img
+          alt=""
+          src={logo}
+          className={classes.logo}
+          onClick={() => onClick(PAGES[0])}
+        />
+        {/* <h3 onClick={() => onClick(PAGES[0])} className={classes.logo}>
+          Hadith House
+        </h3> */}
       </div>
       <Divider />
       <List>
@@ -60,9 +70,10 @@ function NavDrawer({ classes, onClick, onClose, open }) {
 }
 
 NavDrawer.propTypes = {
+  autoHide: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   open: PropTypes.bool.isRequired
 };
 
