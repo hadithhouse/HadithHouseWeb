@@ -1,8 +1,13 @@
 import React from "react";
 import HomeIcon from "@material-ui/icons/Home";
+import { Hadith } from "../../components/Hadith";
 
 export function Home() {
-  return <div>This is the home page.</div>;
+  return (
+    <div>
+      <Hadith hadithId="random" />
+    </div>
+  );
 }
 
 Home.pageInfo = {
