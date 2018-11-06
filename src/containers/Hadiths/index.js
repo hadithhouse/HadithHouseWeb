@@ -8,5 +8,5 @@ export function Hadiths() {
 Hadiths.pageInfo = {
   path: "/hadiths",
   icon: <ChatIcon />,
-  title: "Hadiths"
+  title: "الأحاديث"
 };

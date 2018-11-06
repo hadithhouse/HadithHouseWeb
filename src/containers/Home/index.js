@@ -13,5 +13,5 @@ export function Home() {
 Home.pageInfo = {
   path: "/",
   icon: <HomeIcon />,
-  title: "Home"
+  title: "الصفحة الرئيسية"
 };

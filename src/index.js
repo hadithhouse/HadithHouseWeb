@@ -11,6 +11,16 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import blue from "@material-ui/core/colors/blue";
 import pink from "@material-ui/core/colors/pink";
 import { darken } from "@material-ui/core/styles/colorManipulator";
+import { create } from "jss";
+import rtl from "jss-rtl";
+import JssProvider from "react-jss/lib/JssProvider";
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
+
+// Configure JSS
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+// Custom Material-UI class name generator.
+const generateClassName = createGenerateClassName();
 
 function getTheme(uiTheme) {
   const theme = createMuiTheme({
@@ -30,7 +40,7 @@ function getTheme(uiTheme) {
 }
 
 const theme = getTheme({
-  direction: "ltr",
+  direction: "rtl",
   paletteType: "light",
   paletteColors: {
     primary: blue,
@@ -45,7 +55,9 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
-        <App />
+        <JssProvider jss={jss} generateClassName={generateClassName}>
+          <App />
+        </JssProvider>
       </MuiThemeProvider>
     </BrowserRouter>
   </Provider>,
