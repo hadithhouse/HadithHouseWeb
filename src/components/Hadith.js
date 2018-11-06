@@ -5,6 +5,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { CardActions, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const styles = {
   card: {
@@ -30,14 +32,22 @@ class Hadith extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { hadith } = this.state;
+
+    if (!hadith) {
+      return <Card className={classes.card} />;
+    }
 
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography>
-            {this.state.hadith != null ? this.state.hadith.text : ""}
-          </Typography>
+          <Typography>{hadith != null ? hadith.text : ""}</Typography>
         </CardContent>
+        <CardActions>
+          <Button component={Link} to={`/hadiths/${hadith.id}`} size="small">
+            الذهاب الى صفحة الحديث
+          </Button>
+        </CardActions>
       </Card>
     );
   }
