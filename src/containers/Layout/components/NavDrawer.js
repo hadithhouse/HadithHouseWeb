@@ -58,7 +58,7 @@ function NavDrawer({ autoHide, classes, onClick, onClose, open }) {
       </div>
       <Divider />
       <List>
-        {PAGES.map(page => (
+        {PAGES.filter(page => page.showInNavDrawer).map(page => (
           <ListItem button key={page.title} onClick={() => onClick(page)}>
             <ListItemIcon>{page.icon}</ListItemIcon>
             <ListItemText primary={page.title} />

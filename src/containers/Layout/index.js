@@ -40,7 +40,13 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, openNavDrawer, closeNavDrawer, layout } = this.props;
+    const {
+      classes,
+      openNavDrawer,
+      closeNavDrawer,
+      layout,
+      location
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -67,7 +73,7 @@ class Layout extends React.Component {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.drawerHeader} />
-          <Router />
+          <Router location={location} />
         </main>
       </div>
     );
@@ -90,10 +96,12 @@ function mapStateToProps(state) {
   return { layout: state.layout };
 }
 
-const reduxComp = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(withRouter(Layout)));
-
-const reduxCompWithStyles = withStyles(styles, { withTheme: true })(reduxComp);
-export { reduxCompWithStyles as Layout, layoutReducer };
+const comp = withStyles(styles, { withTheme: true })(
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Layout)
+  )
+);
+export { comp as Layout, layoutReducer };

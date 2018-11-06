@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { PAGES } from "../pages";
 
@@ -26,3 +27,7 @@ export class Router extends React.Component {
     return <div>Invalid page URL.</div>;
   }
 }
+
+Router.propTypes = {
+  location: PropTypes.object.isRequired
+};

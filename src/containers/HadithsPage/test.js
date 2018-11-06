@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Home } from "./";
+import { HadithsPage } from "./";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
-  ReactDOM.render(<Home />, div);
+  ReactDOM.render(<HadithsPage />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

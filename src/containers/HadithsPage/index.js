@@ -1,12 +1,13 @@
 import React from "react";
 import ChatIcon from "@material-ui/icons/Chat";
 
-export function Hadiths() {
+export function HadithsPage() {
   return <div>This is the Hadiths page.</div>;
 }
 
-Hadiths.pageInfo = {
+HadithsPage.pageInfo = {
   path: "/hadiths",
   icon: <ChatIcon />,
-  title: "الأحاديث"
+  title: "الأحاديث",
+  showInNavDrawer: true
 };
