@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { HadithWidget } from "../../components/HadithWidget";
+import { HadithWidget } from "../../../components/HadithWidget";
 
-export default class HomePageView extends React.Component {
+export default class HomePageContent extends React.Component {
   render() {
     const { hadith } = this.props;
 
@@ -18,6 +18,6 @@ export default class HomePageView extends React.Component {
   }
 }
 
-HomePageView.propTypes = {
+HomePageContent.propTypes = {
   hadith: PropTypes.object
 };

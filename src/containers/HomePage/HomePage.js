@@ -1,5 +1,5 @@
 import React from "react";
-import HomePageView from "./HomePageView";
+import HomePageContent from "./components/HomePageContent";
 import axios from "axios";
 
 export default class HomePage extends React.Component {
@@ -24,6 +24,6 @@ export default class HomePage extends React.Component {
   render() {
     const { hadith } = this.state;
 
-    return <HomePageView hadith={hadith} />;
+    return <HomePageContent hadith={hadith} />;
   }
 }
