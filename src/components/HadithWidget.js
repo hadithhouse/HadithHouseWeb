@@ -19,17 +19,6 @@ class HadithWidget extends React.Component {
     hadith: null
   };
 
-  componentDidMount() {
-    axios
-      .get(`http://api-dev.hadithhouse.net/apis/hadiths/${this.props.hadithId}`)
-      .then(response => {
-        const hadith = response.data;
-        this.setState({
-          hadith: hadith
-        });
-      });
-  }
-
   render() {
     const { classes, hadith } = this.props;
 
