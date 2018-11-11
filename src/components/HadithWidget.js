@@ -14,7 +14,7 @@ const styles = {
   }
 };
 
-class Hadith extends React.Component {
+class HadithWidget extends React.Component {
   state = {
     hadith: null
   };
@@ -31,8 +31,7 @@ class Hadith extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { hadith } = this.state;
+    const { classes, hadith } = this.props;
 
     if (!hadith) {
       return <Card className={classes.card} />;
@@ -41,7 +40,7 @@ class Hadith extends React.Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography>{hadith != null ? hadith.text : ""}</Typography>
+          <Typography>{hadith.text}</Typography>
         </CardContent>
         <CardActions>
           <Button component={Link} to={`/hadiths/${hadith.id}`} size="small">
@@ -53,11 +52,11 @@ class Hadith extends React.Component {
   }
 }
 
-Hadith.propTypes = {
+HadithWidget.propTypes = {
   classes: PropTypes.object.isRequired,
-  hadithId: PropTypes.string.isRequired
+  hadith: PropTypes.object.isRequired
 };
 
-const comp = withStyles(styles)(Hadith);
+const comp = withStyles(styles)(HadithWidget);
 
-export { comp as Hadith };
+export { comp as HadithWidget };
