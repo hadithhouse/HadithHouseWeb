@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HomePageView from "./HomePageView";
+import HomePageContent from "./HomePageContent";
 import { MemoryRouter } from "react-router";
 
 it("renders without crashing", () => {
@@ -11,7 +11,7 @@ it("renders without crashing", () => {
   };
   ReactDOM.render(
     <MemoryRouter>
-      <HomePageView hadith={hadith} />
+      <HomePageContent hadith={hadith} />
     </MemoryRouter>,
     div
   );
