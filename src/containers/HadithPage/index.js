@@ -74,7 +74,7 @@ class HadithPage extends React.Component {
 HadithPage.pageInfo = {
   path: "/hadiths/:hadithId",
   icon: <ChatIcon />,
-  title: "الأحاديث",
+  titleResourceName: "hadith_page_title",
   showInNavDrawer: false
 };
 

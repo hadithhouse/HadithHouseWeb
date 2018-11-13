@@ -8,18 +8,19 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { PAGES } from "../pages";
+import { withNamespaces } from "react-i18next";
 
 import logo from "./logo.png";
 
-const drawerWidth = 240;
+export const DRAWER_WIDTH = 240;
 
 const styles = theme => ({
   drawer: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: DRAWER_WIDTH
   },
   drawerHeader: {
     display: "flex",
@@ -33,7 +34,7 @@ const styles = theme => ({
   }
 });
 
-function NavDrawer({ autoHide, classes, onClick, onClose, open }) {
+function NavDrawer({ autoHide, classes, onClick, onClose, open, t }) {
   return (
     <Drawer
       className={classes.drawer}
@@ -52,18 +53,19 @@ function NavDrawer({ autoHide, classes, onClick, onClose, open }) {
           className={classes.logo}
           onClick={() => onClick(PAGES[0])}
         />
-        {/* <h3 onClick={() => onClick(PAGES[0])} className={classes.logo}>
-          Hadith House
-        </h3> */}
       </div>
       <Divider />
       <List>
-        {PAGES.filter(page => page.showInNavDrawer).map(page => (
-          <ListItem button key={page.title} onClick={() => onClick(page)}>
-            <ListItemIcon>{page.icon}</ListItemIcon>
-            <ListItemText primary={page.title} />
-          </ListItem>
-        ))}
+        {PAGES.filter(page => page.showInNavDrawer).map(page => {
+          const key = page.titleResourceName;
+          const title = t(page.titleResourceName);
+          return (
+            <ListItem button key={key} onClick={() => onClick(page)}>
+              <ListItemIcon>{page.icon}</ListItemIcon>
+              <ListItemText primary={title} />
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );
@@ -77,5 +79,7 @@ NavDrawer.propTypes = {
   open: PropTypes.bool.isRequired
 };
 
-const comp = withStyles(styles)(NavDrawer);
+const comp = withNamespaces()(
+  withStyles(styles, { withTheme: true })(NavDrawer)
+);
 export { comp as NavDrawer };

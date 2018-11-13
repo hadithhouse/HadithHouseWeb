@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import { CardActions, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -18,17 +17,6 @@ class HadithWidget extends React.Component {
   state = {
     hadith: null
   };
-
-  componentDidMount() {
-    axios
-      .get(`http://api-dev.hadithhouse.net/apis/hadiths/${this.props.hadithId}`)
-      .then(response => {
-        const hadith = response.data;
-        this.setState({
-          hadith: hadith
-        });
-      });
-  }
 
   render() {
     const { classes, hadith } = this.props;

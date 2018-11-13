@@ -1,7 +1,8 @@
 import { LAYOUT_ACTIONS } from "./actions";
 
 const INIT_STATE = {
-  isNavDrawerOpen: false
+  isNavDrawerOpen: false,
+  isLanguageMenuOpen: false
 };
 
 export default function(state = INIT_STATE, action) {
@@ -16,6 +17,24 @@ export default function(state = INIT_STATE, action) {
       return {
         ...state,
         isNavDrawerOpen: false
+      };
+
+    case LAYOUT_ACTIONS.OPEN_LANGUAGE_MENU:
+      return {
+        ...state,
+        isLanguageMenuOpen: true
+      };
+
+    case LAYOUT_ACTIONS.CLOSE_LANGUAGE_MENU:
+      return {
+        ...state,
+        isLanguageMenuOpen: false
+      };
+
+    case LAYOUT_ACTIONS.TOGGLE_LANGUAGE_MENU:
+      return {
+        ...state,
+        isLanguageMenuOpen: !state.isLanguageMenuOpen
       };
 
     default:
