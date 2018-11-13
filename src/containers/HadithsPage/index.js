@@ -5,7 +5,7 @@ import HadithsPage from "./HadithsPage";
 HadithsPage.pageInfo = {
   path: "/hadiths",
   icon: <ChatIcon />,
-  title: "الأحاديث",
+  titleResourceName: "hadiths_page_title",
   showInNavDrawer: true
 };
 

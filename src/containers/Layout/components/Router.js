@@ -10,7 +10,7 @@ export class Router extends React.Component {
         {PAGES.map(page => {
           return (
             <Route
-              key={page.title}
+              key={page.titleResourceName}
               path={page.path}
               exact={true}
               component={page.component}

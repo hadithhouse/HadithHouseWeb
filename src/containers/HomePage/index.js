@@ -5,7 +5,7 @@ import HomePage from "./HomePage";
 HomePage.pageInfo = {
   path: "/",
   icon: <HomeIcon />,
-  title: "الصفحة الرئيسية",
+  titleResourceName: "home_page_title",
   showInNavDrawer: true
 };
 
