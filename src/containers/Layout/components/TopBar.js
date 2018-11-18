@@ -49,7 +49,6 @@ class TopBar extends React.Component {
   };
 
   render() {
-    console.log("TopBar render()", this.props.theme, this.props.classes);
     const { languageMenuAnchorEl } = this.state;
     const languageMenuOpen = Boolean(languageMenuAnchorEl);
 
@@ -120,10 +119,10 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  changeLanguage: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired, // Set by withStyles()
   onDrawerClicked: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  changeLanguage: PropTypes.func.isRequired
+  title: PropTypes.string.isRequired
 };
 
 const comp = withStyles(styles, { withTheme: true })(TopBar);
