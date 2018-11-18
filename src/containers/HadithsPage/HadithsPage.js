@@ -1,8 +1,16 @@
 import React from "react";
+import ChatIcon from "@material-ui/icons/Chat";
 import HadithsPageContent from "./components/HadithsPageContent";
 import axios from "axios";
 
 export default class HadithsPage extends React.Component {
+  static pageInfo = {
+    path: "/hadiths",
+    icon: <ChatIcon />,
+    titleResourceName: "HadithsPage.Title",
+    showInNavDrawer: true
+  };
+
   state = {
     hadiths: [],
     hadithsPerPage: 10,

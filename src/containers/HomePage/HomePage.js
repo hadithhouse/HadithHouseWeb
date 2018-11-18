@@ -1,8 +1,16 @@
 import React from "react";
+import HomeIcon from "@material-ui/icons/Home";
 import HomePageContent from "./components/HomePageContent";
 import axios from "axios";
 
 export default class HomePage extends React.Component {
+  static pageInfo = {
+    path: "/",
+    icon: <HomeIcon />,
+    titleResourceName: "HomePage.Title",
+    showInNavDrawer: true
+  };
+
   state = {
     hadith: null
   };

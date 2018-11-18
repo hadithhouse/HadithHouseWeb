@@ -14,6 +14,10 @@ import {
 } from "../../theme";
 
 class Layout extends React.Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  };
+
   state = {
     language: "ar",
     dir: "rtl",
@@ -57,9 +61,6 @@ class Layout extends React.Component {
     const [theme, jss] =
       dir === "rtl" ? [rtlTheme, rtlJss] : [ltrTheme, ltrJss];
 
-    // console.log("lang", this.state.language, i18n, i18n.language);
-    // console.log("dir", dir);
-
     return (
       <div dir={dir}>
         <CssBaseline />
@@ -79,9 +80,5 @@ class Layout extends React.Component {
     );
   }
 }
-
-LayoutContent.propTypes = {
-  history: PropTypes.object.isRequired
-};
 
 export default Layout;

@@ -10,6 +10,10 @@ import Backend from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { reactI18nextModule } from "react-i18next";
 
+function formatNumber(number, language) {
+  return number.toLocaleString(language);
+}
+
 i18n
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
@@ -24,8 +28,14 @@ i18n
   .init({
     fallbackLng: "en",
     debug: true,
-    keySeparator: false, // we do not use keys in form messages.welcome
+    keySeparator: ".", // we do not use keys in form messages.welcome
     interpolation: {
+      format: function(value, format, language) {
+        if (format === "number") {
+          return formatNumber(value, language);
+        }
+        return value;
+      },
       escapeValue: false // not needed for react as it escapes by default
     },
     react: {
