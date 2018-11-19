@@ -4,13 +4,16 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { CardActions, Button } from "@material-ui/core";
+import { CardActions, Button, Chip } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
 
 const styles = {
   card: {
     maxWidth: "100%"
+  },
+  chip: {
+    marginRight: 5
   }
 };
 
@@ -26,19 +29,27 @@ class HadithWidget extends React.Component {
   };
 
   render() {
-    const { classes, hadith, t } = this.props;
+    const { classes, hadith, t, ...other } = this.props;
 
     if (!hadith) {
       return <Card className={classes.card} />;
     }
 
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} {...other}>
         <CardContent>
           <Typography>{hadith.text}</Typography>
+          {hadith.tags.map(tag => (
+            <Chip className={classes.chip} label={tag.name} color="primary" />
+          ))}
         </CardContent>
         <CardActions>
-          <Button component={Link} to={`/hadiths/${hadith.id}`} size="small">
+          <Button
+            component={Link}
+            to={`/hadiths/${hadith.id}`}
+            size="small"
+            color="primary"
+          >
             {t("HadithWidget.GoToHadithPage")}
           </Button>
         </CardActions>
@@ -47,6 +58,8 @@ class HadithWidget extends React.Component {
   }
 }
 
-const WrappedHadithWidget = withStyles(styles)(withNamespaces()(HadithWidget));
+const WrappedHadithWidget = withStyles(styles, { withTheme: true })(
+  withNamespaces()(HadithWidget)
+);
 
 export { WrappedHadithWidget as HadithWidget };
