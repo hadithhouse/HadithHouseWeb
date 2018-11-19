@@ -79,7 +79,7 @@ NavDrawer.propTypes = {
   open: PropTypes.bool.isRequired
 };
 
-const comp = withNamespaces()(
+const WrappedNavDrawer = withNamespaces()(
   withStyles(styles, { withTheme: true })(NavDrawer)
 );
-export { comp as NavDrawer };
+export { WrappedNavDrawer as NavDrawer };

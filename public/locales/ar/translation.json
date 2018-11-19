@@ -1,5 +1,22 @@
 {
-  "app_title": "بيت الحديث",
-  "home_page_title": "الصفحة الرئيسية",
-  "hadiths_page_title": "الأحاديث"
+  "App": {
+    "Title": "بيت الحديث"
+  },
+  "HomePage": {
+    "Title": "الصفحة الرئيسية"
+  },
+  "HadithWidget": {
+    "GoToHadithPage": "االذهاب إلى صفحة الحديث"
+  },
+  "Paginator": {
+    "Next": "الصفحة التالية",
+    "Prev": "الصفحة السابقة",
+    "First": "الصفحة الأولى",
+    "Last": "الصفحة الأخيرة"
+  },
+  "HadithsPage": {
+    "Title": "الأحاديث",
+    "NumberOfDisplayedHadiths": "عدد الأحاديث المعروضة",
+    "RangeOfDisplayedHadiths": "{{from, number}} - {{to, number}} من {{count, number}} حديث"
+  }
 }

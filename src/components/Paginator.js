@@ -6,6 +6,8 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { withStyles } from "@material-ui/core/styles";
+import { withNamespaces } from "react-i18next";
+
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Select, InputBase, MenuItem } from "@material-ui/core";
@@ -54,6 +56,68 @@ const styles = theme => ({
 });
 
 class Paginator extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired, // Set by withStyles()
+
+    /**
+     * The total number of entities the pagination is required for.
+     */
+    count: PropTypes.number.isRequired,
+
+    /**
+     * A function that returns a text to be displayed to indicate what entities
+     * are currently displayed, e.g. 1-5 of 13. The function receives an object
+     * containing the following fields: from, to, count, page, which are
+     * self-explanatory. The function should return the label to display.
+     */
+    displayedEntitiesLabelProvider: PropTypes.func,
+
+    /**
+     * Specifies the maximum number of entities to show in a page.
+     */
+    entitiesPerPage: PropTypes.number.isRequired,
+
+    /**
+     * This is used to display a lable at the beginning of the paginator, something
+     * like: "Entities per page:"
+     */
+    entitiesPerPageLabel: PropTypes.node,
+
+    /**
+     * An array of numbers for available options for the number of entities to display
+     * per page, e.g. [5, 10, 20] to allow the user to select 5, 10, 20 for the number
+     * of entities to display per page.
+     */
+    entitiesPerPageOptions: PropTypes.array,
+
+    /**
+     * A callback to be fired when the number of entities per page is changed.
+     *
+     * @param {object} event The event source of the callback
+     */
+    onChangeEntitiesPerPage: PropTypes.func.isRequired,
+
+    onChangePage: PropTypes.func.isRequired,
+
+    /**
+     * The index of the currently selected page.
+     */
+    page: PropTypes.number.isRequired,
+
+    SelectProps: PropTypes.object,
+
+    t: PropTypes.func.isRequired, // Set by withNamespaces()
+
+    theme: PropTypes.object.isRequired // Set by withStyles()
+  };
+
+  static defaultProps = {
+    entitiesPerPageLabel: "Entities per page:",
+    displayedEntitiesLabelProvider: ({ from, to, count }) =>
+      `${from}-${to} of ${count}`,
+    entitiesPerPageOptions: [10, 25, 50]
+  };
+
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(1);
   };
@@ -86,8 +150,14 @@ class Paginator extends React.Component {
       entitiesPerPageLabel,
       entitiesPerPageOptions,
       page,
-      theme
+      theme,
+      t
     } = this.props;
+
+    const nextLabel = t("Paginator.Next"),
+      prevLabel = t("Paginator.Prev"),
+      firstLabel = t("Paginator.First"),
+      lastLabel = t("Paginator.Last");
 
     return (
       <Toolbar className={classes.toolbar}>
@@ -135,14 +205,14 @@ class Paginator extends React.Component {
           <IconButton
             onClick={this.handleFirstPageButtonClick}
             disabled={page === 0}
-            aria-label="First Page"
+            aria-label={firstLabel}
           >
             {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
           </IconButton>
           <IconButton
             onClick={this.handleBackButtonClick}
             disabled={page === 0}
-            aria-label="Previous Page"
+            aria-label={prevLabel}
           >
             {theme.direction === "rtl" ? (
               <KeyboardArrowRight />
@@ -153,7 +223,7 @@ class Paginator extends React.Component {
           <IconButton
             onClick={this.handleNextButtonClick}
             disabled={page >= Math.ceil(count / entitiesPerPage) - 1}
-            aria-label="Next Page"
+            aria-label={nextLabel}
           >
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
@@ -164,7 +234,7 @@ class Paginator extends React.Component {
           <IconButton
             onClick={this.handleLastPageButtonClick}
             disabled={page >= Math.ceil(count / entitiesPerPage) - 1}
-            aria-label="Last Page"
+            aria-label={lastLabel}
           >
             {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
           </IconButton>
@@ -174,72 +244,8 @@ class Paginator extends React.Component {
   }
 }
 
-Paginator.propTypes = {
-  /**
-   * Classes provided by withStyle().
-   */
-  classes: PropTypes.object.isRequired,
+const WrappedPaginator = withNamespaces()(
+  withStyles(styles, { withTheme: true })(Paginator)
+);
 
-  /**
-   * The total number of entities the pagination is required for.
-   */
-  count: PropTypes.number.isRequired,
-
-  /**
-   * A function that returns a text to be displayed to indicate what entities
-   * are currently displayed, e.g. 1-5 of 13. The function receives an object
-   * containing the following fields: from, to, count, page, which are
-   * self-explanatory. The function should return the label to display.
-   */
-  displayedEntitiesLabelProvider: PropTypes.func,
-
-  /**
-   * Specifies the maximum number of entities to show in a page.
-   */
-  entitiesPerPage: PropTypes.number.isRequired,
-
-  /**
-   * This is used to display a lable at the beginning of the paginator, something
-   * like: "Entities per page:"
-   */
-  entitiesPerPageLabel: PropTypes.node,
-
-  /**
-   * An array of numbers for available options for the number of entities to display
-   * per page, e.g. [5, 10, 20] to allow the user to select 5, 10, 20 for the number
-   * of entities to display per page.
-   */
-  entitiesPerPageOptions: PropTypes.array,
-
-  /**
-   * A callback to be fired when the number of entities per page is changed.
-   *
-   * @param {object} event The event source of the callback
-   */
-  onChangeEntitiesPerPage: PropTypes.func.isRequired,
-
-  onChangePage: PropTypes.func.isRequired,
-
-  /**
-   * The index of the currently selected page.
-   */
-  page: PropTypes.number.isRequired,
-
-  SelectProps: PropTypes.object,
-
-  /**
-   * Theme provided by withStyles().
-   */
-  theme: PropTypes.object.isRequired
-};
-
-Paginator.defaultProps = {
-  entitiesPerPageLabel: "Entities per page:",
-  displayedEntitiesLabelProvider: ({ from, to, count }) =>
-    `${from}-${to} of ${count}`,
-  entitiesPerPageOptions: [10, 25, 50]
-};
-
-const comp = withStyles(styles, { withTheme: true })(Paginator);
-
-export { comp as Paginator };
+export { WrappedPaginator as Paginator };

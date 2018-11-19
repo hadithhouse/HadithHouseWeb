@@ -1,5 +1,22 @@
 {
-  "app_title": "Hadith House",
-  "home_page_title": "Home",
-  "hadiths_page_title": "Hadiths"
+  "App": {
+    "Title": "Hadith House"
+  },
+  "HomePage": {
+    "Title": "Home"
+  },
+  "HadithWidget": {
+    "GoToHadithPage": "Go to Hadith Page"
+  },
+  "Paginator": {
+    "Next": "Next Page",
+    "Prev": "Previous Page",
+    "First": "First Page",
+    "Last": "Last Page"
+  },
+  "HadithsPage": {
+    "Title": "Hadiths",
+    "NumberOfDisplayedHadiths": "Number of displayed hadiths",
+    "RangeOfDisplayedHadiths": "{{from, number}} - {{to, number}} of {{count, number}} hadiths"
+  }
 }

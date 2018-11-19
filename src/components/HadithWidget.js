@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { CardActions, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
 
 const styles = {
   card: {
@@ -14,12 +15,18 @@ const styles = {
 };
 
 class HadithWidget extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired, // Set by withStyles()
+    hadith: PropTypes.object.isRequired,
+    t: PropTypes.func.isRequired // Set by withI18n()
+  };
+
   state = {
     hadith: null
   };
 
   render() {
-    const { classes, hadith } = this.props;
+    const { classes, hadith, t } = this.props;
 
     if (!hadith) {
       return <Card className={classes.card} />;
@@ -32,7 +39,7 @@ class HadithWidget extends React.Component {
         </CardContent>
         <CardActions>
           <Button component={Link} to={`/hadiths/${hadith.id}`} size="small">
-            الذهاب الى صفحة الحديث
+            {t("HadithWidget.GoToHadithPage")}
           </Button>
         </CardActions>
       </Card>
@@ -40,11 +47,6 @@ class HadithWidget extends React.Component {
   }
 }
 
-HadithWidget.propTypes = {
-  classes: PropTypes.object.isRequired,
-  hadith: PropTypes.object.isRequired
-};
+const WrappedHadithWidget = withStyles(styles)(withNamespaces()(HadithWidget));
 
-const comp = withStyles(styles)(HadithWidget);
-
-export { comp as HadithWidget };
+export { WrappedHadithWidget as HadithWidget };

@@ -2,8 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Paginator } from "../../../components/Paginator";
 import { HadithWidget } from "../../../components/HadithWidget";
+import { withNamespaces } from "react-i18next";
 
-export default class HadithsPageContent extends React.Component {
+class HadithsPageContent extends React.Component {
+  static propTypes = {
+    count: PropTypes.number.isRequired,
+    hadiths: PropTypes.array.isRequired,
+    hadithsPerPage: PropTypes.number.isRequired,
+    onChangeHadithsPerPage: PropTypes.func.isRequired,
+    onChangePage: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    t: PropTypes.func.isRequired // Set by withNamespaces()
+  };
+
   render() {
     const {
       count,
@@ -11,12 +22,20 @@ export default class HadithsPageContent extends React.Component {
       hadithsPerPage,
       onChangeHadithsPerPage,
       onChangePage,
-      page
+      page,
+      t
     } = this.props;
 
     if (!hadiths) {
       return <div />;
     }
+
+    const numberOfDisplayedHadithsLabel = t(
+      "HadithsPage.NumberOfDisplayedHadiths"
+    );
+    const rangeOfDisplayedHadithsLabelProvider = ({ from, to, count }) => {
+      return t("HadithsPage.RangeOfDisplayedHadiths", { from, to, count });
+    };
 
     return (
       <div>
@@ -29,21 +48,14 @@ export default class HadithsPageContent extends React.Component {
           page={page}
           count={count}
           entitiesPerPage={hadithsPerPage}
-          entitiesPerPageLabel="عدد الأحاديث المعروضة"
-          displayedEntitiesLabelProvider={({ from, to, count }) =>
-            `${from}-${to} من ${count} حديث`
-          }
+          entitiesPerPageLabel={numberOfDisplayedHadithsLabel}
+          displayedEntitiesLabelProvider={rangeOfDisplayedHadithsLabelProvider}
         />
       </div>
     );
   }
 }
 
-HadithsPageContent.propTypes = {
-  count: PropTypes.number.isRequired,
-  hadiths: PropTypes.array.isRequired,
-  hadithsPerPage: PropTypes.number.isRequired,
-  onChangeHadithsPerPage: PropTypes.func.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired
-};
+const WrappedHadithsPageContent = withNamespaces()(HadithsPageContent);
+
+export default WrappedHadithsPageContent;

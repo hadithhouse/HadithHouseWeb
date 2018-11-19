@@ -30,6 +30,19 @@ const styles = theme => ({
 });
 
 class LayoutContent extends React.Component {
+  static propTypes = {
+    changeLanguage: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired, // Set by withStyles()
+    closeNavDrawer: PropTypes.func.isRequired,
+    dir: PropTypes.string.isRequired,
+    isNavDrawerOpen: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired, // Set by withRouter()
+    onNavItemClicked: PropTypes.func.isRequired,
+    openNavDrawer: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired, // Set by withNamespaces()
+    theme: PropTypes.object.isRequired // Set by withStyles()
+  };
+
   render() {
     const {
       changeLanguage,
@@ -43,7 +56,7 @@ class LayoutContent extends React.Component {
       t
     } = this.props;
 
-    const appTitle = t("app_title");
+    const appTitle = t("App.Title");
 
     return (
       <div dir={dir}>
@@ -78,19 +91,6 @@ class LayoutContent extends React.Component {
     );
   }
 }
-
-LayoutContent.propTypes = {
-  changeLanguage: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired, // Set by withStyles()
-  closeNavDrawer: PropTypes.func.isRequired,
-  dir: PropTypes.string.isRequired,
-  isNavDrawerOpen: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired, // Set by withRouter()
-  onNavItemClicked: PropTypes.func.isRequired,
-  openNavDrawer: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired, // Set by withNamespaces()
-  theme: PropTypes.object.isRequired // Set by withStyles()
-};
 
 const WrappedLayoutContent = withNamespaces()(
   withStyles(styles, { withTheme: true })(withRouter(LayoutContent))
