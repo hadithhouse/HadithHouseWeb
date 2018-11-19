@@ -106,7 +106,7 @@ class Paginator extends React.Component {
 
     SelectProps: PropTypes.object,
 
-    t: PropTypes.func.isRequired, // Set by withI18n()
+    t: PropTypes.func.isRequired, // Set by withNamespaces()
 
     theme: PropTypes.object.isRequired // Set by withStyles()
   };

@@ -9,7 +9,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { PAGES } from "../pages";
 import { withNamespaces } from "react-i18next";
-// import { withI18n } from "react-i18next";
 
 import logo from "./logo.png";
 
