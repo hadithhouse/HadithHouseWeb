@@ -1,6 +1,7 @@
 import { HomePage } from "../HomePage";
 import { HadithPage } from "../HadithPage";
 import { HadithsPage } from "../HadithsPage";
+import { HadithTagsPage } from "../HadithTagsPage";
 
 function getPageInfo(pageComponent) {
   return {
@@ -9,6 +10,6 @@ function getPageInfo(pageComponent) {
   };
 }
 
-export const PAGES = [HomePage, HadithPage, HadithsPage].map(c =>
-  getPageInfo(c)
+export const PAGES = [HomePage, HadithPage, HadithsPage, HadithTagsPage].map(
+  c => getPageInfo(c)
 );

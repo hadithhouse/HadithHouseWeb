@@ -18,5 +18,10 @@
     "Title": "Hadiths",
     "NumberOfDisplayedHadiths": "Number of displayed hadiths",
     "RangeOfDisplayedHadiths": "{{from, number}} - {{to, number}} of {{count, number}} hadiths"
+  },
+  "HadithTagsPage": {
+    "Title": "Hadith Tags",
+    "NumberOfDisplayedTags": "Number of displayed tags",
+    "RangeOfDisplayedTags": "{{from, number}} - {{to, number}} of {{count, number}} tags"
   }
 }
