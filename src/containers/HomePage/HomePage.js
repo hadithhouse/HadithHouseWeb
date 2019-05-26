@@ -17,7 +17,9 @@ export default class HomePage extends React.Component {
 
   loadRandomHadith() {
     axios
-      .get(`http://api-dev.hadithhouse.net/apis/hadiths/random`)
+      .get(`http://api-dev.hadithhouse.net/apis/hadiths/random`, {
+        params: { expand: true }
+      })
       .then(response => {
         this.setState({
           hadith: response.data

@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 import { Paginator } from "../../../components/Paginator";
 import { HadithWidget } from "../../../components/HadithWidget";
 import { withNamespaces } from "react-i18next";
+import { withStyles } from "@material-ui/core";
+
+const styles = {
+  hadithWidget: {
+    marginBottom: 5
+  }
+};
 
 class HadithsPageContent extends React.Component {
   static propTypes = {
@@ -17,6 +24,7 @@ class HadithsPageContent extends React.Component {
 
   render() {
     const {
+      classes,
       count,
       hadiths,
       hadithsPerPage,
@@ -40,7 +48,11 @@ class HadithsPageContent extends React.Component {
     return (
       <div>
         {hadiths.map(h => (
-          <HadithWidget key={h.id} hadith={h} />
+          <HadithWidget
+            key={h.id}
+            hadith={h}
+            className={classes.hadithWidget}
+          />
         ))}
         <Paginator
           onChangeEntitiesPerPage={onChangeHadithsPerPage}
@@ -56,6 +68,8 @@ class HadithsPageContent extends React.Component {
   }
 }
 
-const WrappedHadithsPageContent = withNamespaces()(HadithsPageContent);
+const WrappedHadithsPageContent = withStyles(styles)(
+  withNamespaces()(HadithsPageContent)
+);
 
 export default WrappedHadithsPageContent;

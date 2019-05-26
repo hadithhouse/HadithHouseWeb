@@ -18,5 +18,10 @@
     "Title": "الأحاديث",
     "NumberOfDisplayedHadiths": "عدد الأحاديث المعروضة",
     "RangeOfDisplayedHadiths": "{{from, number}} - {{to, number}} من {{count, number}} حديث"
+  },
+  "HadithTagsPage": {
+    "Title": "أوسمة الأحاديث",
+    "NumberOfDisplayedTags": "عدد الأوسمة المعروضة",
+    "RangeOfDisplayedTags": "{{from, number}} - {{to, number}} من {{count, number}} وسام"
   }
 }
