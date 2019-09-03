@@ -3,7 +3,7 @@
 pipeline {
   agent any
 
-  triggers {
+  pipelineTriggers {
     issueCommentTrigger('.*test this please.*')
   }
 
