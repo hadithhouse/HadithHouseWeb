@@ -3,10 +3,6 @@
 pipeline {
   agent any
 
-  pipelineTriggers {
-    issueCommentTrigger('.*test this please.*')
-  }
-
   stages {
     stage('Install Node modules') {
       steps {
